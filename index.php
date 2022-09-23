@@ -11,7 +11,7 @@ if(!isset($_REQUEST['uc']))
 else
 	$uc = $_REQUEST['uc'];
 
- 
+// traitement de l'uc : on charge le contrôleur approprié. 
 switch($uc)
 {
 	case 'accueil':
