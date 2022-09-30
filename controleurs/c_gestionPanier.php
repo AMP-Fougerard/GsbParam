@@ -27,19 +27,6 @@ switch($action)
 		include("vues/v_panier.php");
 		break;
 	}
-	case 'viderPanier':
-	{
-		$n= nbProduitsDuPanier();
-		if($n >0){
-			$message = "panier vidé";
-			supprimerPanier();
-			include ("vues/v_message.php");
-		} else {
-			$message = "panier vide !!";
-			include ("vues/v_message.php");
-		}
-		break;
-	}
 	case 'passerCommande' :
 	    $n= nbProduitsDuPanier();
 		if($n>0)
@@ -66,10 +53,9 @@ switch($action)
 		else
 		{
 			$lesIdProduit = getLesIdProduitsDuPanier();
-			if ( creerCommande($nom,$rue,$cp,$ville,$mail, $lesIdProduit ) ){
-				$message = "Commande enregistrée";
-				supprimerPanier();
-			}
+			creerCommande($nom,$rue,$cp,$ville,$mail, $lesIdProduit );
+			$message = "Commande enregistrée";
+			supprimerPanier();
 			include ("vues/v_message.php");
 		}
 		break;

@@ -55,28 +55,6 @@ include_once 'bd.inc.php';
 		}
 	}
 /**
- * Retourne sous forme d'un tableau associatif tous les produits 
- * 
- * @return array $lesLignes un tableau associatif  contenant les produits de la categ passée en paramètre
-*/
-
-	function getLesProduits()
-	{
-		try 
-		{
-        $monPdo = connexionPDO();
-	    $req='select id, description, prix, image, idCategorie from produit';
-		$res = $monPdo->query($req);
-		$lesLignes = $res->fetchAll(PDO::FETCH_ASSOC);
-		return $lesLignes; 
-		} 
-		catch (PDOException $e) 
-		{
-        print "Erreur !: " . $e->getMessage();
-        die();
-		}
-	}
-/**
  * Retourne sous forme d'un tableau associatif tous les produits de la
  * catégorie passée en argument
  * 
@@ -147,7 +125,6 @@ include_once 'bd.inc.php';
 	*/
 	function creerCommande($nom,$rue,$cp,$ville,$mail, $lesIdProduit )
 	{
-		$tmp = false ;
 		try 
 		{
         $monPdo = connexionPDO();
@@ -166,14 +143,12 @@ include_once 'bd.inc.php';
 			$req = "insert into contenir values ('$idCommande','$unIdProduit')";
 			$res = $monPdo->exec($req);
 		}
-		$tmp = true ;
 		}
 		catch (PDOException $e) 
 		{
         print "Erreur !: " . $e->getMessage();
         die();
 		}
-		return $tmp;
 	}
 	/**
 	 * Retourne les produits concernés par le tableau des idProduits passée en argument

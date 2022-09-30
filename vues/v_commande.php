@@ -12,11 +12,11 @@
 		</p>
 		<p>
          <label for="cp">code postal* </label>
-         <input id="cp" type="text" name="cp" value="<?php echo $cp ?>" size="5" maxlength="5">
+         <input id="cp" type="text" name="cp" value="<?php echo $cp ?>" size="10" maxlength="10">
       </p>
       <p>
          <label for="ville">ville* </label>
-         <input id="ville" type="text" name="ville"  value="<?php echo $ville ?>" size="30" maxlength="30">
+         <input id="ville" type="text" name="ville"  value="<?php echo $ville ?>" size="5" maxlength="5">
       </p>
       <p>
          <label for="mail">mail* </label>

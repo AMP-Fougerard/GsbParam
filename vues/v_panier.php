@@ -20,13 +20,9 @@ foreach( $lesProduitsDuPanier as $unProduit)
 	</div>
 	<?php
 }
-// var_dump($_SESSION['produits']);
 ?>
 <div class="commande">
 <a href="index.php?uc=gererPanier&action=passerCommande"><img src="images/commander.jpg" title="Passer commande" alt="Commander"></a>
-</div>
-<div class="commande">
-<a href="index.php?uc=gererPanier&action=viderPanier"><img src="images/nepascommander.jpg" title="Vider panier" alt="Vider"></a>
 </div>
 </div>
 <br/>

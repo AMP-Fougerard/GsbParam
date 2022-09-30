@@ -19,12 +19,6 @@ switch($action)
 		include("vues/v_produitsDeCategorie.php");
 		break;
 	}
-	case 'nosProduits' :
-	{
-		$lesProduits = getLesProduits();
-		include("vues/v_produits.php");
-		break;
-	}
 	case 'ajouterAuPanier' :
 	{
 		$idProduit=$_REQUEST['produit'];
