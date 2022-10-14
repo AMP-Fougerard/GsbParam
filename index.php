@@ -3,6 +3,7 @@ session_start();
 include("vues/v_entete.html") ;
 require_once("modele/fonctions.inc.php");
 require_once("modele/bd.produits.inc.php");
+require_once("modele/bd.client.inc.php");
 
 include("vues/v_bandeau.html") ;
 
@@ -20,6 +21,8 @@ switch($uc)
 		{include("controleurs/c_voirProduits.php");break;}
 	case 'gererPanier' :
 		{ include("controleurs/c_gestionPanier.php");break; }
+	case 'gererClient' :
+		{ include("controleurs/c_gestionClients.php");break; }
 	case 'administrer' :
 	  { include("controleurs/c_gestionProduits.php");break;  }
 }

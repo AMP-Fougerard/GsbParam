@@ -65,7 +65,7 @@ include_once 'bd.inc.php';
 		try 
 		{
         $monPdo = connexionPDO();
-	    $req='select id, description, prix, image, idCategorie from produit';
+	    $req='select id, description, prix, image, id_categorie from produit';
 		$res = $monPdo->query($req);
 		$lesLignes = $res->fetchAll(PDO::FETCH_ASSOC);
 		return $lesLignes; 
@@ -89,7 +89,7 @@ include_once 'bd.inc.php';
 		try 
 		{
         $monPdo = connexionPDO();
-	    $req='select id, description, prix, image, idCategorie from produit where idCategorie ="'.$idCategorie.'"';
+	    $req='select id, description, prix, image, id_categorie from produit where id_categorie ="'.$idCategorie.'"';
 		$res = $monPdo->query($req);
 		$lesLignes = $res->fetchAll(PDO::FETCH_ASSOC);
 		return $lesLignes; 
@@ -117,7 +117,7 @@ include_once 'bd.inc.php';
 		{
 			foreach($desIdProduit as $unIdProduit)
 			{
-				$req = 'select id, description, prix, image, idCategorie from produit where id = "'.$unIdProduit.'"';
+				$req = 'select id, description, prix, image, id_categorie from produit where id = "'.$unIdProduit.'"';
 				$res = $monPdo->query($req);
 				$unProduit = $res->fetch(PDO::FETCH_ASSOC);
 				$lesProduits[] = $unProduit;
