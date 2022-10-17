@@ -45,8 +45,15 @@ switch($action)
 		if($n>0)
 		{   // les variables suivantes servent à l'affectation des attributs value du formulaire
 			// ici le formulaire doit être vide, quand il est erroné, le formulaire sera réaffiché pré-rempli
-			$nom ='';$rue='';$ville ='';$cp='';$mail='';
-			include ("vues/v_commande.php");
+			if(!isset($_SESSION['mail'])){
+				$nom ='';$rue='';$ville ='';$cp='';$mail='';
+				$message = "Vous n'avez pas encore de compte pour commander";
+				include ("vues/v_message.php");
+				include ("vues/v_inscription.php");
+			} else {
+				$nom ='';$rue='';$ville ='';$cp='';$mail='';
+				include ("vues/v_commande.php");
+			}
 		}
 		else
 		{

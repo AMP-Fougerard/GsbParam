@@ -63,7 +63,7 @@ include_once 'bd.inc.php';
 	        $monPdo = connexionPDO();
 			$req = $monPdo->prepare("select mail,mdp from login where mail=:mail and mdp=:mdp");
 			$res = $req->execute(array('mail'=>$mail,'mdp'=>$mdp));
-			if ($res NOT NULL){
+			if (!is_null($res)){
 				$tmp = true ;
 			}
 		}
@@ -75,100 +75,126 @@ include_once 'bd.inc.php';
 		return $tmp;
 	}
 	/**
- * Retourne un tableau d'erreurs de saisie pour un client
- * @param string $nom  chaîne testée
- * @param  string $rue chaîne
- * @param string $ville chaîne
- * @param string $cp chaîne
- * @param string $mail  chaîne 
- * @return array $lesErreurs un tableau de chaînes d'erreurs
-*/
-function getErreursSaisieClient($nom,$rue,$ville,$cp,$mail,$mdp1,$mdp2)
-{
-	$lesErreurs = array();
-	if($nom=="")
+	 * Retourne un tableau d'erreurs de saisie pour un client
+	 * @param string $nom  chaîne testée
+	 * @param  string $rue chaîne
+	 * @param string $ville chaîne
+	 * @param string $cp chaîne
+	 * @param string $mail  chaîne 
+	 * @return array $lesErreurs un tableau de chaînes d'erreurs
+	*/
+	function getErreursSaisieClient($nom,$rue,$ville,$cp,$mail,$mdp1,$mdp2)
 	{
-		$lesErreurs[]="Il faut saisir le champ nom";
-	}
-	if($rue=="")
-	{
-	$lesErreurs[]="Il faut saisir le champ rue";
-	}
-	if($ville=="")
-	{
-		$lesErreurs[]="Il faut saisir le champ ville";
-	}
-	if($cp=="")
-	{
-		$lesErreurs[]="Il faut saisir le champ Code postal";
-	}
-	else
-	{
-		if(!estUnCp($cp))
+		$lesErreurs = array();
+		if($nom=="")
 		{
-			$lesErreurs[]= "erreur de code postal";
+			$lesErreurs[]="Il faut saisir le champ nom";
 		}
-	}
-	if($mail=="")
-	{
-		$lesErreurs[]="Il faut saisir le champ mail";
-	}
-	else
-	{
-		if(!estUnMail($mail))
+		if($rue=="")
 		{
-			$lesErreurs[]= "erreur de mail";
+		$lesErreurs[]="Il faut saisir le champ rue";
 		}
-	}
-	if($mdp1=="")
-	{
-		$lesErreurs[]="Il faut saisir le mot de passe";
-	}
-	else
-	{
-		if($mdp2=="")
+		if($ville=="")
 		{
-			$lesErreurs[]="Il faut saisir le deuxième mot de passe";
+			$lesErreurs[]="Il faut saisir le champ ville";
+		}
+		if($cp=="")
+		{
+			$lesErreurs[]="Il faut saisir le champ Code postal";
 		}
 		else
 		{
-			if($mdp1!=$mdp2)
+			if(!estUnCp($cp))
 			{
-				$lesErreurs[]="Vos deux mot de passe ne sont pas les mêmes";
+				$lesErreurs[]= "erreur de code postal";
 			}
 		}
-	}
-	return $lesErreurs;
-}
-/**
- * Retourne un tableau d'erreurs de saisie pour une connexion
- * @param string $mail  chaîne testée
- * @param  string $mdp chaîne
- * @return array $lesErreurs un tableau de chaînes d'erreurs
-*/
-function getErreursSaisieConnexion($mail,$mdp)
-{
-	$lesErreurs = array();
-	$monPdo = connexionPDO();
-	$req = $monPdo->prepare("select mail,mdp from login where mail=:mail and mdp=:mdp");
-	$res = $req->execute(array('mail'=>$mail,'mdp'=>$mdp));
-	if($mail=="")
-	{
-		$lesErreurs[]="Il faut saisir le champ mail";
-	}
-	else
-	{
-		if(!estUnMail($mail))
+		if($mail=="")
 		{
-			$lesErreurs[]= "erreur de mail";
+			$lesErreurs[]="Il faut saisir le champ mail";
 		}
+		else
+		{
+			if(!estUnMail($mail))
+			{
+				$lesErreurs[]= "erreur de mail";
+			}
+		}
+		if($mdp1=="")
+		{
+			$lesErreurs[]="Il faut saisir le mot de passe";
+		}
+		else
+		{
+			if($mdp2=="")
+			{
+				$lesErreurs[]="Il faut saisir le deuxième mot de passe";
+			}
+			else
+			{
+				if($mdp1!=$mdp2)
+				{
+					$lesErreurs[]="Vos deux mot de passe ne sont pas les mêmes";
+				}
+			}
+		}
+		return $lesErreurs;
 	}
-	if($mdp=="")
+	/**
+	 * Retourne un tableau d'erreurs de saisie pour une connexion
+	 * @param string $mail  chaîne testée
+	 * @param  string $mdp chaîne
+	 * @return array $lesErreurs un tableau de chaînes d'erreurs
+	*/
+	function getErreursSaisieConnexion($mail,$mdp)
 	{
-		$lesErreurs[]="Il faut saisir le champ mot de passe";
+		$lesErreurs = array();
+		$monPdo = connexionPDO();
+		$req = $monPdo->prepare("select mail,mdp from login where mail=:mail and mdp=:mdp");
+		$res = $req->execute(array('mail'=>$mail,'mdp'=>$mdp));
+		$result = $req -> fetch(PDO::FETCH_ASSOC);
+		if($mail=="")
+		{
+			$lesErreurs[]="Il faut saisir le champ mail";
+		}
+		else
+		{
+			if(!estUnMail($mail))
+			{
+				$lesErreurs[]= "erreur de mail";
+			} 
+			else 
+			{
+				if($mdp=="")
+				{
+					$lesErreurs[]="Il faut saisir le champ mot de passe";
+				} 
+				else 
+				{
+					if (!$result)
+					{
+						$lesErreurs[]= "Ce mail n'existe pas";
+					} 
+					else 
+					{
+						if($mdp!=$result['mdp'])
+						{
+							$lesErreurs[]= "Le mot de passe est incorrect";
+						}
+						
+					}
+				}
+			}
+		}
+		
+		return $lesErreurs;
 	}
-	
-	return $lesErreurs;
-}
+
+	function getNomClient($mail){
+		$monPdo = connexionPDO();
+		$req = $monPdo->prepare("select nom from client where mail=:mail");
+		$res = $req->execute(array('mail'=>$mail));
+		return $res['nom'];
+	}
 
 ?>

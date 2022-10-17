@@ -5,7 +5,8 @@ switch($action)
 {
 	case 'sInscrire':
 	{
-		include("vues/v_inscripion.php");
+		$nom ='';$rue='';$ville ='';$cp='';$mail='';
+		include("vues/v_inscription.php");
 		break;
 	}
 	case 'inscription':
@@ -19,8 +20,13 @@ switch($action)
 		}
 		else
 		{
-			if ( creerClient($nom,$rue,$cp,$ville,$mail,$lesIdProduit) ){
+			if ( creerClient($nom,$rue,$cp,$ville,$mail,$mdp) ){
 				$message = "Inscription terminé";
+				$_SESSION['mail']=$mail;
+			} else {
+				$msgErreurs = "Un problème est survenue lors de l'inscription";
+				include ("vues/v_erreurs.php");
+				include ("vues/v_inscription.php");
 			}
 			include ("vues/v_message.php");
 		}
@@ -28,31 +34,35 @@ switch($action)
 	}
 	case 'seConnecter' :
 	{
+		$mail='';
 		include("vues/v_connexion.php");
 		break;
 	}
-	case 'connection'
+	case 'connection' :
 	{
-		$mail =$_REQUEST['mail'];$mdp=$_REQUEST['mdp'];
+		$mail =$_REQUEST['mail']; $mdp=$_REQUEST['mdp'];
 	 	$msgErreurs = getErreursSaisieConnexion($mail,$mdp);
 		if (count($msgErreurs)!=0)
 		{
 			include ("vues/v_erreurs.php");
-			include ("vues/v_commande.php");
+			include ("vues/v_connexion.php");
 		}
 		else
 		{
 			if ( connexion($mail,$mdp) ){
 				$message = "Connexion établie";
+				$_SESSION['mail']=$mail;
 			}
+			header('Location: ?uc=accueil');
 			include ("vues/v_message.php");
 		}
 		break;
 	}
 	case 'seDeconnecter' :
 	{
-		session_destroy(); 
-		$massage = 'Déconnexion réussi' ;
+		unset($_SESSION['mail']);
+		$message = 'Déconnexion réussi';
+		header('Location: ?uc=accueil');
 		include("vues/v_message.php");
 		break;
 	}

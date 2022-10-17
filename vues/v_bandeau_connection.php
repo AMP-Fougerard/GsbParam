@@ -2,12 +2,13 @@
 <!-- Images En-tête -->
 <img src="images/logo.jpg"	alt="GsbLogo" title="GsbLogo"/>
 </div>
-<!--  Menu haut-->
+<!-- Phrase de connection -->
+<h3> Bonjour, <?php echo getNomClient($_SESSION['mail']); ?></h3>
+<!--  Menu haut -->
 <ul id="menu">
 	<li><a href="index.php?uc=accueil"> Accueil </a></li>
 	<li><a href="index.php?uc=voirProduits&action=voirCategories"> Nos produits par catégorie </a></li>
 	<li><a href="index.php?uc=voirProduits&action=nosProduits"> Nos produits </a></li>
 	<li><a href="index.php?uc=gererPanier&action=voirPanier"> Voir son panier </a></li>
-	<li><a href="index.php?uc=gererClient&action=sInscrire"> S'inscrire </a></li>
-	<li><a href="index.php?uc=gererClient&action=seConnecter"> Se connecter </a></li>
+	<li><a href="index.php?uc=gererClient&action=seDeconnecter"> Se déconnecter </a></li>
 </ul>

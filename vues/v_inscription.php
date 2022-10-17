@@ -1,7 +1,7 @@
 <div id="inscriptionClient">
 <form method="POST" action="index.php?uc=gererClient&action=inscription">
    <fieldset>
-     <legend>Connexion</legend>
+     <legend>Insciption</legend>
 		<p>
 			<label for="nom">Nom Prénom*</label>
 			<input id="nom" type="text" name="nom" value="<?php echo $nom ?>" size="30" maxlength="45">
