@@ -24,17 +24,25 @@ include_once 'bd.inc.php';
 	 * @param string $mail mail du client
 	 
 	*/
-	function creerClient($nom,$rue,$cp,$ville,$mail,$mdp)
+	function creerClient($nom,$prenom,$rue,$cp,$ville,$mail,$mdp)
 	{
 		$tmp = false ;
 		try 
 		{
+			$hash = password_hash($mdp, PASSWORD_DEFAULT);
 	        $monPdo = connexionPDO();
-			$req = "insert into login (mail,mdp) values ('$mail','$mdp')";
-			$res = $monPdo->exec($req);
-			$req = "insert into client (nom,prenom,adresseRue,cp,ville,mail) values ('$date','$nom','$rue','$cp','$ville','$mail')";
-			$res = $monPdo->exec($req);
-			$tmp = true ;
+
+	        $id = getIdInexistant();
+
+			$req1 = $monPdo->prepare("insert into login (mail,mdp) values (:mail,:mdp)");
+			$res1 = $req1->execute(array('mail'=>$mail,'mdp'=>$hash));
+
+			$req2 = $monPdo->prepare("insert into client (id,nom,prenom,adresseRue,cp,ville,mail) values (:id,:nom,:prenom,:rue,:cp,:ville,:mail)");
+			$res2 = $req2->execute(array('id'=>$id,'nom'=>$nom,'prenom'=>$prenom,'rue'=>$rue,'cp'=>$cp,'ville'=>$ville,'mail'=>$mail));
+
+			if (!is_null($res) && !is_null($res2)){
+				$tmp = true ;
+			}
 		}
 		catch (PDOException $e) 
 		{
@@ -55,14 +63,14 @@ include_once 'bd.inc.php';
 	 * @param string $mail mail du client
 	 
 	*/
-	function connexion($mail,$mdp)
+	function connexion($mail)
 	{
 		$tmp = false ;
 		try 
 		{
 	        $monPdo = connexionPDO();
-			$req = $monPdo->prepare("select mail,mdp from login where mail=:mail and mdp=:mdp");
-			$res = $req->execute(array('mail'=>$mail,'mdp'=>$mdp));
+			$req = $monPdo->prepare("select mail,mdp from login where mail=:mail");
+			$res = $req->execute(array('mail'=>$mail));
 			if (!is_null($res)){
 				$tmp = true ;
 			}
@@ -83,12 +91,16 @@ include_once 'bd.inc.php';
 	 * @param string $mail  chaîne 
 	 * @return array $lesErreurs un tableau de chaînes d'erreurs
 	*/
-	function getErreursSaisieClient($nom,$rue,$ville,$cp,$mail,$mdp1,$mdp2)
+	function getErreursSaisieClient($nom,$prenom,$rue,$ville,$cp,$mail,$mdp1,$mdp2)
 	{
 		$lesErreurs = array();
 		if($nom=="")
 		{
 			$lesErreurs[]="Il faut saisir le champ nom";
+		}
+		if($prenom=="")
+		{
+			$lesErreurs[]="Il faut saisir le champ prenom";
 		}
 		if($rue=="")
 		{
@@ -177,7 +189,7 @@ include_once 'bd.inc.php';
 					} 
 					else 
 					{
-						if($mdp!=$result['mdp'])
+						if(password_verify($mdp, $result['mdp']))
 						{
 							$lesErreurs[]= "Le mot de passe est incorrect";
 						}
@@ -190,6 +202,11 @@ include_once 'bd.inc.php';
 		return $lesErreurs;
 	}
 
+	/**
+	 * Retourne le nom du client en prenant comme paramètre un mail
+	 * @param string $mail  chaîne testée
+	 * @return array $res['nom'] chaîne de caractère
+	*/
 	function getNomClient($mail){
 		$monPdo = connexionPDO();
 		$req = $monPdo->prepare("select nom from client where mail=:mail");
@@ -197,4 +214,19 @@ include_once 'bd.inc.php';
 		return $res['nom'];
 	}
 
+	/**
+	 * Retourne un id aléatoire en héxadécimal qui n'existe pas dans la bdd
+	 * Si l'id existe déja il fait une récursivité
+	 * @return array $id chaîne de caractère 
+	*/
+	function getIdInexistant(){
+		$monPdo = connexionPDO();
+		$id = dechex(rand(10000,999999999999));
+		$req = $monPdo->prepare("select id from client where id=:id");
+		$res = $req->execute(array('id'=>$id));
+		if (isset($res)){
+			$id = getIdInexistant();
+		}
+		return $id;
+	}
 ?>

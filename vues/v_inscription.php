@@ -3,9 +3,13 @@
    <fieldset>
      <legend>Insciption</legend>
 		<p>
-			<label for="nom">Nom Prénom*</label>
+			<label for="nom">Nom*</label>
 			<input id="nom" type="text" name="nom" value="<?php echo $nom ?>" size="30" maxlength="45">
 		</p>
+      <p>
+         <label for="nom">Prénom*</label>
+         <input id="prenom" type="text" name="prenom" value="<?php echo $prenom ?>" size="30" maxlength="45">
+      </p>
 		<p>
 			<label for="rue">rue*</label>
 			 <input id="rue" type="text" name="rue" value="<?php echo $rue ?>" size="30" maxlength="45">

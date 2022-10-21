@@ -5,14 +5,14 @@ switch($action)
 {
 	case 'sInscrire':
 	{
-		$nom ='';$rue='';$ville ='';$cp='';$mail='';
+		$nom ='';$prenom='';$rue='';$ville ='';$cp='';$mail='';
 		include("vues/v_inscription.php");
 		break;
 	}
 	case 'inscription':
 	{
-		$nom =$_REQUEST['nom'];$rue=$_REQUEST['rue'];$ville =$_REQUEST['ville'];$cp=$_REQUEST['cp'];$mail=$_REQUEST['mail'];$mdp1=$_REQUEST['mdp1'];$mdp2=$_REQUEST['mdp2'];
-	 	$msgErreurs = getErreursSaisieClient($nom,$rue,$ville,$cp,$mail,$mdp1,$mdp2);
+		$nom =$_REQUEST['nom'];$prenom =$_REQUEST['prenom'];$rue =$_REQUEST['rue'];$ville =$_REQUEST['ville'];$cp=$_REQUEST['cp'];$mail=$_REQUEST['mail'];$mdp1=$_REQUEST['mdp1'];$mdp2=$_REQUEST['mdp2'];
+	 	$msgErreurs = getErreursSaisieClient($nom,$prenom,$rue,$ville,$cp,$mail,$mdp1,$mdp2);
 		if (count($msgErreurs)!=0)
 		{
 			include ("vues/v_erreurs.php");
@@ -20,7 +20,7 @@ switch($action)
 		}
 		else
 		{
-			if ( creerClient($nom,$rue,$cp,$ville,$mail,$mdp) ){
+			if ( creerClient($nom,$prenom,$rue,$cp,$ville,$mail,$mdp1) ){
 				$message = "Inscription terminé";
 				$_SESSION['mail']=$mail;
 			} else {
@@ -49,12 +49,17 @@ switch($action)
 		}
 		else
 		{
-			if ( connexion($mail,$mdp) ){
+			if ( connexion($mail) ){
 				$message = "Connexion établie";
 				$_SESSION['mail']=$mail;
+				include ("vues/v_message.php");
+				header('Location: ?uc=accueil');
+			} else {
+				$msgErreurs="Erreur dans la connexion à la base de donnée";
+				include ("vues/v_erreurs.php");
+				include ("vues/v_connexion.php");
 			}
-			header('Location: ?uc=accueil');
-			include ("vues/v_message.php");
+			
 		}
 		break;
 	}
