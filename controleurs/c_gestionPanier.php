@@ -45,14 +45,14 @@ switch($action)
 		if($n>0)
 		{   // les variables suivantes servent à l'affectation des attributs value du formulaire
 			// ici le formulaire doit être vide, quand il est erroné, le formulaire sera réaffiché pré-rempli
-			if(!isset($_SESSION['mail'])){
-				$nom ='';$rue='';$ville ='';$cp='';$mail='';
-				$message = "Vous n'avez pas encore de compte pour commander";
-				include ("vues/v_message.php");
-				include ("vues/v_inscription.php");
+			if(!isset($_SESSION['mail'])){	
+				$msgErreurs[] = "Un compte est nécessaire pour commander";
+				include ("vues/v_erreurs.php");
+				$desIdProduit = getLesIdProduitsDuPanier();
+				$lesProduitsDuPanier = getLesProduitsDuTableau($desIdProduit);
+				include ("vues/v_panier.php");
 			} else {
-				$nom ='';$rue='';$ville ='';$cp='';$mail='';
-				include ("vues/v_commande.php");
+				header('Location: ?uc=gererPanier&action=confirmerCommande');
 			}
 		}
 		else
@@ -61,24 +61,20 @@ switch($action)
 			include ("vues/v_message.php");
 		}
 		break;
-	case 'confirmerCommande'	:
+	case 'confirmerCommande' :
 	{
-		$nom =$_REQUEST['nom'];$rue=$_REQUEST['rue'];$ville =$_REQUEST['ville'];$cp=$_REQUEST['cp'];$mail=$_REQUEST['mail'];
-	 	$msgErreurs = getErreursSaisieCommande($nom,$rue,$ville,$cp,$mail);
-		if (count($msgErreurs)!=0)
-		{
+		$lesIdProduit = getLesIdProduitsDuPanier();
+		if ( creerCommande($_SESSION['mail'], $lesIdProduit ) ){
+			$message = "Commande enregistrée";
+			supprimerPanier();
+		} else {
+			$msgErreurs[] = "Une erreur est survenue lors de l'enregistrement de la commande";
 			include ("vues/v_erreurs.php");
-			include ("vues/v_commande.php");
+			$desIdProduit = getLesIdProduitsDuPanier();
+			$lesProduitsDuPanier = getLesProduitsDuTableau($desIdProduit);
+			include ("vues/v_panier.php");
 		}
-		else
-		{
-			$lesIdProduit = getLesIdProduitsDuPanier();
-			if ( creerCommande($nom,$rue,$cp,$ville,$mail, $lesIdProduit ) ){
-				$message = "Commande enregistrée";
-				supprimerPanier();
-			}
-			include ("vues/v_message.php");
-		}
+		include ("vues/v_message.php");
 		break;
 	}
 }

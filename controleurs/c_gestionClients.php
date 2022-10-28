@@ -4,7 +4,7 @@ $action = $_REQUEST['action'];
 switch($action)
 {
 	case 'sInscrire':
-	{
+	{	
 		$nom ='';$prenom='';$rue='';$ville ='';$cp='';$mail='';
 		include("vues/v_inscription.php");
 		break;
@@ -21,14 +21,13 @@ switch($action)
 		else
 		{
 			if ( creerClient($nom,$prenom,$rue,$cp,$ville,$mail,$mdp1) ){
-				$message = "Inscription terminé";
-				$_SESSION['mail']=$mail;
+				$_SESSION['msg']="Inscription terminé";
+				header('Location: ?uc=gererClient&action=seConnecter');
 			} else {
-				$msgErreurs = "Un problème est survenue lors de l'inscription";
+				$msgErreurs[] = "Un problème est survenue lors de l'inscription";
 				include ("vues/v_erreurs.php");
 				include ("vues/v_inscription.php");
 			}
-			include ("vues/v_message.php");
 		}
   		break;
 	}
@@ -66,9 +65,8 @@ switch($action)
 	case 'seDeconnecter' :
 	{
 		unset($_SESSION['mail']);
-		$message = 'Déconnexion réussi';
+		$_SESSION['msg']="Déconnexion réussi";
 		header('Location: ?uc=accueil');
-		include("vues/v_message.php");
 		break;
 	}
 }

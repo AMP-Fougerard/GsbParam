@@ -134,38 +134,41 @@ include_once 'bd.inc.php';
 	/**
 	 * Crée une commande 
 	 *
-	 * Crée une commande à partir des arguments validés passés en paramètre, l'identifiant est
-	 * construit à partir du maximum existant ; crée les lignes de commandes dans la table contenir à partir du
+	 * Crée une commande à partir des arguments validés passés en paramètre, crée les lignes de commandes dans la table contenir à partir du
 	 * tableau d'idProduit passé en paramètre
-	 * @param string $nom nom du client
-	 * @param string $rue rue du client
-	 * @param string $cp cp du client
-	 * @param string $ville ville du client
 	 * @param string $mail mail du client
 	 * @param array $lesIdProduit tableau associatif contenant les id des produits commandés
 	 
 	*/
-	function creerCommande($nom,$rue,$cp,$ville,$mail, $lesIdProduit )
+	function creerCommande($mail, $lesIdProduit )
 	{
 		$tmp = false ;
 		try 
 		{
         $monPdo = connexionPDO();
 		// on récupère le dernier id de commande
-		$req = 'select max(id) as maxi from commande';
+		$req = 'select id as maxi from commande';
 		$res = $monPdo->query($req);
-		$laLigne = $res->fetch();
-		$maxi = $laLigne['maxi'] ;// on place le dernier id de commande dans $maxi
-		$idCommande = $maxi+1; // on augmente le dernier id de commande de 1 pour avoir le nouvel idCommande
+		$lesLignes = $res->fetchAll();
+		$nbr = count($lesLignes)+1 ;
+		while (testIdCmd($nbr)==false){
+			$nbr++;
+		}
+		$idCommande = $nbr; 
 		$date = date('Y/m/d'); // récupération de la date système
-		$req = "insert into commande values ('$idCommande','$date','$nom','$rue','$cp','$ville','$mail')";
+		$req = "insert into commande values ('$idCommande','$date')";
 		$res = $monPdo->exec($req);
 		// insertion produits commandés
 		foreach($lesIdProduit as $unIdProduit)
 		{
-			$req = "insert into contenir values ('$idCommande','$unIdProduit')";
+			$req = "insert into contenir values ('$idCommande','$unIdProduit','1')";
 			$res = $monPdo->exec($req);
 		}
+
+		$id = getIdClient($mail);
+		$req = "insert into effectuer values ('$id','$idCommande')";
+		$res = $monPdo->exec($req);
+
 		$tmp = true ;
 		}
 		catch (PDOException $e) 
@@ -197,5 +200,23 @@ include_once 'bd.inc.php';
         print "Erreur !: " . $e->getMessage();
         die();
 		}
+	}
+
+	/**
+	 * Retourne true si l'id rentrer en paramètre n'existe pas déja sinon false
+	 * 
+	 * @param $id chaine de caractère
+	 * @return $rep boolean
+	 */
+	function testIdCmd($id){
+		$rep=false;
+		$monPdo = connexionPDO();
+		$req = 'select id from commande where id= '.$id;
+		$res = $monPdo->query($req);
+		$laCommande = $res->fetch(PDO::FETCH_ASSOC);
+		if (!$laCommande){
+			$rep=true;
+		}
+		return $rep;
 	}
 ?>

@@ -17,8 +17,15 @@ if(!isset($_REQUEST['uc']))
 else
 	$uc = $_REQUEST['uc'];
 
-var_dump($_SESSION);
- 
+//var_dump($_SESSION);
+//var_dump($_REQUEST);
+
+if (isset($_SESSION['msg'])) {
+	$message = $_SESSION['msg'];
+	include ("vues/v_message.php");
+	unset($_SESSION['msg']);
+}
+
 switch($uc)
 {
 	case 'accueil':

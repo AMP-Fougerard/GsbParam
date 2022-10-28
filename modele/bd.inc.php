@@ -20,7 +20,7 @@ function connexionPDO() {
     $mdp = 'dev';
     $bd = 'GsbParam';
     $serveur = 'localhost';
-    $port = '3307';
+    $port = '3306';
 
 
     try {

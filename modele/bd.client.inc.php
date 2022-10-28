@@ -40,7 +40,7 @@ include_once 'bd.inc.php';
 			$req2 = $monPdo->prepare("insert into client (id,nom,prenom,adresseRue,cp,ville,mail) values (:id,:nom,:prenom,:rue,:cp,:ville,:mail)");
 			$res2 = $req2->execute(array('id'=>$id,'nom'=>$nom,'prenom'=>$prenom,'rue'=>$rue,'cp'=>$cp,'ville'=>$ville,'mail'=>$mail));
 
-			if (!is_null($res) && !is_null($res2)){
+			if (!is_null($res1) && !is_null($res2)){
 				$tmp = true ;
 			}
 		}
@@ -162,8 +162,8 @@ include_once 'bd.inc.php';
 	{
 		$lesErreurs = array();
 		$monPdo = connexionPDO();
-		$req = $monPdo->prepare("select mail,mdp from login where mail=:mail and mdp=:mdp");
-		$res = $req->execute(array('mail'=>$mail,'mdp'=>$mdp));
+		$req = $monPdo->prepare("select mail,mdp from login where mail=:mail");
+		$res = $req->execute(array('mail'=>$mail));
 		$result = $req -> fetch(PDO::FETCH_ASSOC);
 		if($mail=="")
 		{
@@ -183,13 +183,13 @@ include_once 'bd.inc.php';
 				} 
 				else 
 				{
-					if (!$result)
+					if ($mail!=$result['mail'])
 					{
 						$lesErreurs[]= "Ce mail n'existe pas";
 					} 
 					else 
 					{
-						if(password_verify($mdp, $result['mdp']))
+						if(!password_verify($mdp, $result['mdp']))
 						{
 							$lesErreurs[]= "Le mot de passe est incorrect";
 						}
@@ -203,30 +203,60 @@ include_once 'bd.inc.php';
 	}
 
 	/**
-	 * Retourne le nom du client en prenant comme paramètre un mail
+	 * Retourne le nom et prenom du client en prenant comme paramètre un mail
 	 * @param string $mail  chaîne testée
 	 * @return array $res['nom'] chaîne de caractère
 	*/
 	function getNomClient($mail){
 		$monPdo = connexionPDO();
-		$req = $monPdo->prepare("select nom from client where mail=:mail");
+		$req = $monPdo->prepare("select nom,prenom from client where mail=:mail");
 		$res = $req->execute(array('mail'=>$mail));
-		return $res['nom'];
+		$res = $req -> fetch(PDO::FETCH_ASSOC);
+		return $res['nom']." ".$res['prenom'];
 	}
 
 	/**
-	 * Retourne un id aléatoire en héxadécimal qui n'existe pas dans la bdd
-	 * Si l'id existe déja il fait une récursivité
+	 * Retourne un id en héxadécimal qui n'existe pas dans la bdd
+	 * 
 	 * @return array $id chaîne de caractère 
 	*/
 	function getIdInexistant(){
 		$monPdo = connexionPDO();
-		$id = dechex(rand(10000,999999999999));
+		$id = "1";
+		$req = $monPdo->query("select id from client");
+		$res = $req -> fetchAll(PDO::FETCH_ASSOC);
+		$lstId = count($res)+1;
+		$id = (string)dechex($lstId);
+		while (strlen((string)$id)<8){
+			$id="0".$id;
+		}
 		$req = $monPdo->prepare("select id from client where id=:id");
 		$res = $req->execute(array('id'=>$id));
-		if (isset($res)){
-			$id = getIdInexistant();
+		$res = $req -> fetch(PDO::FETCH_ASSOC);
+		while ($res!=false){
+			$lstId++;
+			$id = (string)dechex($lstId);
+			while (strlen((string)$id)<8){
+				$id="0".$id;
+			}
+			$req = $monPdo->prepare("select id from client where id=:id");
+			$res = $req->execute(array('id'=>$id));
+			$res = $req -> fetch(PDO::FETCH_ASSOC);
 		}
 		return $id;
+	}
+
+	/**
+	 * Retourne l'Id du client possédant le mail entrer en paramètre
+	 * 
+	 * @param $mail chaine de caractère
+	 * @return $res chaine de caractère
+	 */
+	function getIdClient($mail){
+		$monPdo = connexionPDO();
+		$req = $monPdo->prepare("select id from client where mail=:mail");
+		$res = $req->execute(array('mail'=>$mail));
+		$res = $req -> fetch(PDO::FETCH_ASSOC);
+		return $res['id'];
 	}
 ?>
