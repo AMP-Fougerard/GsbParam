@@ -140,7 +140,7 @@ include_once 'bd.inc.php';
 	 * @param array $lesIdProduit tableau associatif contenant les id des produits commandés
 	 
 	*/
-	function creerCommande($mail, $lesIdProduit )
+	function creerCommande($mail, $lesIdProduits)
 	{
 		$tmp = false ;
 		try 
@@ -159,9 +159,10 @@ include_once 'bd.inc.php';
 		$req = "insert into commande values ('$idCommande','$date')";
 		$res = $monPdo->exec($req);
 		// insertion produits commandés
-		foreach($lesIdProduit as $unIdProduit)
+		foreach($lesIdProduits as $unIdProduit)
 		{
-			$req = "insert into contenir values ('$idCommande','$unIdProduit','1')";
+			$qteProduit=getQteProduit($unIdProduit);
+			$req = "insert into contenir values ('$idCommande','$unIdProduit','$qteProduit')";
 			$res = $monPdo->exec($req);
 		}
 

@@ -77,6 +77,25 @@ switch($action)
 		include ("vues/v_message.php");
 		break;
 	}
+	case 'ajouterProduit' :
+	{
+		$idProduit=$_REQUEST['produit'];
+		if(ajouterUnProduit($idProduit)){
+			header('Location: ?uc=gererPanier&action=voirPanier#produits');
+		}
+		
+		break;
+	}
+	case 'diminuerProduit' :
+	{
+		$idProduit=$_REQUEST['produit'];
+		if(enleverUnProduit($idProduit)){
+			header('Location: ?uc=gererPanier&action=voirPanier#produits');
+		}else{
+			header('Location: ?uc=gererPanier&produit='.$idProduit.'&action=supprimerUnProduit#produits');
+		}
+		break;
+	}
 }
 
 

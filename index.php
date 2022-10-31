@@ -17,8 +17,8 @@ if(!isset($_REQUEST['uc']))
 else
 	$uc = $_REQUEST['uc'];
 
-//var_dump($_SESSION);
-//var_dump($_REQUEST);
+// var_dump($_SESSION);
+// var_dump($_REQUEST);
 
 if (isset($_SESSION['msg'])) {
 	$message = $_SESSION['msg'];

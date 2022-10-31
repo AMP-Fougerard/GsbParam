@@ -21,6 +21,7 @@ function initPanier()
 	if(!isset($_SESSION['produits']))
 	{
 		$_SESSION['produits']= array();
+		$_SESSION['quantite']= array();
 	}
 }
 /**
@@ -31,6 +32,7 @@ function initPanier()
 function supprimerPanier()
 {
 	unset($_SESSION['produits']);
+	unset($_SESSION['quantite']);
 }
 /**
  * Ajoute un produit au panier
@@ -53,6 +55,7 @@ function ajouterAuPanier($idProduit)
 	else
 	{
 		$_SESSION['produits'][]= $idProduit; // l'indice n'est pas précisé : il sera automatiquement celui qui suit le dernier occupé
+		$_SESSION['quantite'][]= 1;
 	}
 	return $ok;
 }
@@ -98,7 +101,75 @@ function retirerDuPanier($idProduit)
 {
 		$index =array_search($idProduit,$_SESSION['produits']);
 		unset($_SESSION['produits'][$index]);
+		unset($_SESSION['quantite'][$index]);
 }
+/**
+ * Retourne les quantités des produits du panier
+ *
+ * Retourne le tableau des quantité de produit
+ 
+ * @return array $_SESSION['quantite'] le tableau des quantitées des produits du panier 
+*/
+function getQteProduit($idProduit)
+{
+	$index =array_search($idProduit,$_SESSION['produits']);
+	return $_SESSION['quantite'][$index];
+}
+/**
+ * Ajoute un produit à la quantité du produit
+ *
+ * Teste si l'identifiant du produit est déjà dans la variable session 
+ * ajoute l'identifiant à la variable de type session dans le cas où
+ * où l'identifiant du produit n'a pas été trouvé
+ 
+ * @param string $idProduit identifiant de produit
+ * @return boolean $ok vrai si le produit n'était pas dans la variable, faux sinon 
+*/
+function ajouterUnProduit($idProduit)
+{
+	
+	$ok = true;
+	if(!in_array($idProduit,$_SESSION['produits']))
+	{
+		$ok = false;
+	}
+	else
+	{
+		$index =array_search($idProduit,$_SESSION['produits']);
+		$_SESSION['quantite'][$index]++;
+	}
+	return $ok;
+}
+/**
+ * Enlever un produit à la quantité du produit
+ *
+ * Teste si l'identifiant du produit est déjà dans la variable session 
+ * ajoute l'identifiant à la variable de type session dans le cas où
+ * où l'identifiant du produit n'a pas été trouvé
+ 
+ * @param string $idProduit identifiant de produit
+ * @return boolean $ok vrai si le produit n'était pas dans la variable, faux sinon 
+*/
+function enleverUnProduit($idProduit)
+{
+	
+	$ok = true;
+	if(!in_array($idProduit,$_SESSION['produits']))
+	{
+		$ok = false;
+	}
+	else
+	{
+		$index =array_search($idProduit,$_SESSION['produits']);
+		if ($_SESSION['quantite'][$index]>1){
+			$_SESSION['quantite'][$index]--;
+		} else {
+			$ok = false;
+		}
+	}
+	return $ok;
+}
+
 /**
  * teste si une chaîne a un format de code postal
  *
