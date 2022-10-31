@@ -7,7 +7,7 @@
 			<input id="nom" type="text" name="nom" value="<?php echo $nom ?>" size="30" maxlength="45">
 		</p>
       <p>
-         <label for="nom">Prénom*</label>
+         <label for="prenom">Prénom*</label>
          <input id="prenom" type="text" name="prenom" value="<?php echo $prenom ?>" size="30" maxlength="45">
       </p>
 		<p>

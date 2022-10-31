@@ -7,7 +7,7 @@
          <input id="mail" type="text"  name="mail" value="<?php echo $mail ?>" size ="25" maxlength="25">
       </p>
       <p>
-         <label for="mail">mot de passe* </label>
+         <label for="mdp">mot de passe* </label>
          <input id="mdp" type="password"  name="mdp" size ="25" maxlength="25">
       </p>
 	  	<p>
