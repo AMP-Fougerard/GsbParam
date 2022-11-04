@@ -11,7 +11,11 @@ switch($action)
 	}
 	case 'inscription':
 	{
-		$nom =$_REQUEST['nom'];$prenom =$_REQUEST['prenom'];$rue =$_REQUEST['rue'];$ville =$_REQUEST['ville'];$cp=$_REQUEST['cp'];$mail=$_REQUEST['mail'];$mdp1=$_REQUEST['mdp1'];$mdp2=$_REQUEST['mdp2'];
+		if (count($_POST)>0){
+			$nom =$_POST['nom'];$prenom =$_POST['prenom'];$rue =$_POST['rue'];$ville =$_POST['ville'];$cp=$_POST['cp'];$mail=$_POST['mail'];$mdp1=$_POST['mdp1'];$mdp2=$_POST['mdp2'];
+		} else {
+			$nom ='';$prenom='';$rue='';$ville ='';$cp='';$mail='';$mdp1='';$mdp2='';
+		}
 	 	$msgErreurs = getErreursSaisieClient($nom,$prenom,$rue,$ville,$cp,$mail,$mdp1,$mdp2);
 		if (count($msgErreurs)!=0)
 		{
@@ -39,7 +43,12 @@ switch($action)
 	}
 	case 'connection' :
 	{
-		$mail =$_REQUEST['mail']; $mdp=$_REQUEST['mdp'];
+		
+		if (count($_POST)>0){
+			$mail =$_POST['mail']; $mdp=$_POST['mdp'];
+		} else {
+			$mail=''; $mdp='';
+		}
 	 	$msgErreurs = getErreursSaisieConnexion($mail,$mdp);
 		if (count($msgErreurs)!=0)
 		{
