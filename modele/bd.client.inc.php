@@ -204,6 +204,7 @@ include_once 'bd.inc.php';
 
 	/**
 	 * Retourne le nom et prenom du client en prenant comme paramètre un mail
+	 * 
 	 * @param string $mail  chaîne testée
 	 * @return array $res['nom'] chaîne de caractère
 	*/
@@ -249,14 +250,75 @@ include_once 'bd.inc.php';
 	/**
 	 * Retourne l'Id du client possédant le mail entrer en paramètre
 	 * 
-	 * @param $mail chaine de caractère
-	 * @return $res chaine de caractère
+	 * @param string $mail mail client
+	 * @return string $res id client
 	 */
-	function getIdClient($mail){
+	function getIdClient($mail)
+	{
 		$monPdo = connexionPDO();
 		$req = $monPdo->prepare("select id from client where mail=:mail");
 		$res = $req->execute(array('mail'=>$mail));
 		$res = $req -> fetch(PDO::FETCH_ASSOC);
 		return $res['id'];
+	}
+
+	/**
+	 * Retourne le nom de l'administrateur grace à un id donné en paramètre
+	 * 
+	 * @param int $idAdmin id administrateur
+	 * @return string $nom chaine de caractère
+	 */
+	function getNomAdmin($idAdmin)
+	{
+		$monPdo = connexionPDO();
+		$req = $monPdo->prepare("select nom from administrateur where id=:id");
+		$res = $req->execute(array('id'=>$idAdmin));
+		$res = $req -> fetch(PDO::FETCH_ASSOC);
+		$nom = $res['nom'];
+		return $nom;
+	}
+	/**
+	 * Retourne l'id de l'administrateur grace au nom donné en paramètre
+	 * 
+	 * @param $nomAdmin chaine de caractère
+	 * @return $id int
+	 */
+	function getIdAdmin($nomAdmin)
+	{
+		$monPdo = connexionPDO();
+		$req = $monPdo->prepare("select id from administrateur where nom=:nom");
+		$res = $req->execute(array('nom'=>$nomAdmin));
+		$res = $req -> fetch(PDO::FETCH_ASSOC);
+		$id = $res['id'];
+		return $id;
+	}
+	/**
+	 * Vérifie si les informations de l'administrateur entrer en paramètre existe dans la BD
+	 * true si l'administrateur existe, false sinon
+	 * 
+	 * @param string $nom nom administrateur
+	 * @param string $mdp chaine de caractère
+	 * @return boolean $tmp true/false
+	 */
+	function verifyExistAdmin($nom,$mdp)
+	{
+		$tmp = false;
+		try 
+		{
+			$monPdo = connexionPDO();
+			$req = $monPdo->prepare("select nom,mdp from administrateur where nom=:nom");
+			$res = $req->execute(array('nom'=>$nom));
+			$res = $req -> fetch(PDO::FETCH_ASSOC);
+			if ($res){
+				if ($res['mdp']==$mdp)
+					$tmp = true;
+			}
+		}
+		catch (PDOException $e) 
+		{
+	        print "Erreur !: " . $e->getMessage();
+	        die();
+		}
+		return $tmp;
 	}
 ?>

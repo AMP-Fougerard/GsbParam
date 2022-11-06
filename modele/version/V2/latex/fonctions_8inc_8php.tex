@@ -1,0 +1,278 @@
+\hypertarget{fonctions_8inc_8php}{}\doxysection{fonctions.\+inc.\+php File Reference}
+\label{fonctions_8inc_8php}\index{fonctions.inc.php@{fonctions.inc.php}}
+\doxysubsection*{Namespaces}
+\begin{DoxyCompactItemize}
+\item 
+namespace \mbox{\hyperlink{namespace_gsb_param}{Gsb\+Param}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{fonctions_8inc_8php_a7c3f3b6845445b896480e3bd6b9ec6ae}{init\+Panier}} ()
+\item 
+\mbox{\hyperlink{fonctions_8inc_8php_a6d2472e7b8bc9e7d0f546cece9d4f6c8}{supprimer\+Panier}} ()
+\item 
+\mbox{\hyperlink{fonctions_8inc_8php_aa9d617d702da2755a6f308ad7748f49d}{ajouter\+Au\+Panier}} (\$id\+Produit)
+\item 
+\mbox{\hyperlink{fonctions_8inc_8php_a59a95455bd9ca8f5253abd17d3072a97}{get\+Les\+Id\+Produits\+Du\+Panier}} ()
+\item 
+\mbox{\hyperlink{fonctions_8inc_8php_a40295a28174a0eccf95afe21322bbab7}{nb\+Produits\+Du\+Panier}} ()
+\item 
+\mbox{\hyperlink{fonctions_8inc_8php_a9abbd8b2a086aad084ad4ebcaa79d740}{retirer\+Du\+Panier}} (\$id\+Produit)
+\item 
+\mbox{\hyperlink{fonctions_8inc_8php_a0f86d06ad96a224939003cb9959f5b42}{get\+Qte\+Produit}} (\$id\+Produit)
+\item 
+\mbox{\hyperlink{fonctions_8inc_8php_aa12060eb057be4310ec0e2c3aab6b8be}{ajouter\+Un\+Produit}} (\$id\+Produit)
+\item 
+\mbox{\hyperlink{fonctions_8inc_8php_a36074d9d9cb3c0a93d5cc0cf98cdb286}{enlever\+Un\+Produit}} (\$id\+Produit)
+\item 
+\mbox{\hyperlink{fonctions_8inc_8php_a84de5caad41b5a853d48722806e001f6}{est\+Un\+Cp}} (\$code\+Postal)
+\item 
+\mbox{\hyperlink{fonctions_8inc_8php_af8cba6b0c8902dc65b7522b5952b30bf}{est\+Entier}} (\$valeur)
+\item 
+\mbox{\hyperlink{fonctions_8inc_8php_aead423fbfa9fbd9217e69173452122c7}{est\+Un\+Mail}} (\$mail)
+\item 
+\mbox{\hyperlink{fonctions_8inc_8php_a810b47f6ec8b91f7e04c5069352184ec}{get\+Erreurs\+Saisie\+Commande}} (\$nom, \$rue, \$ville, \$cp, \$mail)
+\item 
+\mbox{\hyperlink{fonctions_8inc_8php_a48c91481f78242cdd549482fc63337f3}{get\+Erreurs\+Saisie\+Produit}} (\$desc, \$prix, \$img)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyAuthor}{Author}
+Marielle Jouin \href{mailto:jouin.marielle@gmail.com}{\texttt{ jouin.\+marielle@gmail.\+com}} 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+2.\+0 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+juin 2021
+\end{DoxyDate}
+contient les fonctions qui ne font pas accès aux données de la BD
+
+regroupe les fonctions pour gérer le panier, et les erreurs de saisie dans le formulaire de commande 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{fonctions_8inc_8php_aa9d617d702da2755a6f308ad7748f49d}\label{fonctions_8inc_8php_aa9d617d702da2755a6f308ad7748f49d}} 
+\index{fonctions.inc.php@{fonctions.inc.php}!ajouterAuPanier@{ajouterAuPanier}}
+\index{ajouterAuPanier@{ajouterAuPanier}!fonctions.inc.php@{fonctions.inc.php}}
+\doxysubsubsection{\texorpdfstring{ajouterAuPanier()}{ajouterAuPanier()}}
+{\footnotesize\ttfamily ajouter\+Au\+Panier (\begin{DoxyParamCaption}\item[{}]{\$id\+Produit }\end{DoxyParamCaption})}
+
+Ajoute un produit au panier
+
+Teste si l\textquotesingle{}identifiant du produit est déjà dans la variable session ajoute l\textquotesingle{}identifiant à la variable de type session dans le cas où où l\textquotesingle{}identifiant du produit n\textquotesingle{}a pas été trouvé
+
+
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$id\+Produit} & identifiant de produit \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+boolean \$ok vrai si le produit n\textquotesingle{}était pas dans la variable, faux sinon 
+\end{DoxyReturn}
+\mbox{\Hypertarget{fonctions_8inc_8php_aa12060eb057be4310ec0e2c3aab6b8be}\label{fonctions_8inc_8php_aa12060eb057be4310ec0e2c3aab6b8be}} 
+\index{fonctions.inc.php@{fonctions.inc.php}!ajouterUnProduit@{ajouterUnProduit}}
+\index{ajouterUnProduit@{ajouterUnProduit}!fonctions.inc.php@{fonctions.inc.php}}
+\doxysubsubsection{\texorpdfstring{ajouterUnProduit()}{ajouterUnProduit()}}
+{\footnotesize\ttfamily ajouter\+Un\+Produit (\begin{DoxyParamCaption}\item[{}]{\$id\+Produit }\end{DoxyParamCaption})}
+
+Ajoute un produit à la quantité du produit
+
+Teste si l\textquotesingle{}identifiant du produit est déjà dans la variable session ajoute l\textquotesingle{}identifiant à la variable de type session dans le cas où où l\textquotesingle{}identifiant du produit n\textquotesingle{}a pas été trouvé
+
+
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$id\+Produit} & identifiant de produit \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+boolean \$ok vrai si le produit n\textquotesingle{}était pas dans la variable, faux sinon 
+\end{DoxyReturn}
+\mbox{\Hypertarget{fonctions_8inc_8php_a36074d9d9cb3c0a93d5cc0cf98cdb286}\label{fonctions_8inc_8php_a36074d9d9cb3c0a93d5cc0cf98cdb286}} 
+\index{fonctions.inc.php@{fonctions.inc.php}!enleverUnProduit@{enleverUnProduit}}
+\index{enleverUnProduit@{enleverUnProduit}!fonctions.inc.php@{fonctions.inc.php}}
+\doxysubsubsection{\texorpdfstring{enleverUnProduit()}{enleverUnProduit()}}
+{\footnotesize\ttfamily enlever\+Un\+Produit (\begin{DoxyParamCaption}\item[{}]{\$id\+Produit }\end{DoxyParamCaption})}
+
+Enlever un produit à la quantité du produit
+
+Teste si l\textquotesingle{}identifiant du produit est déjà dans la variable session ajoute l\textquotesingle{}identifiant à la variable de type session dans le cas où où l\textquotesingle{}identifiant du produit n\textquotesingle{}a pas été trouvé
+
+
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$id\+Produit} & identifiant de produit \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+boolean \$ok vrai si le produit n\textquotesingle{}était pas dans la variable, faux sinon 
+\end{DoxyReturn}
+\mbox{\Hypertarget{fonctions_8inc_8php_af8cba6b0c8902dc65b7522b5952b30bf}\label{fonctions_8inc_8php_af8cba6b0c8902dc65b7522b5952b30bf}} 
+\index{fonctions.inc.php@{fonctions.inc.php}!estEntier@{estEntier}}
+\index{estEntier@{estEntier}!fonctions.inc.php@{fonctions.inc.php}}
+\doxysubsubsection{\texorpdfstring{estEntier()}{estEntier()}}
+{\footnotesize\ttfamily est\+Entier (\begin{DoxyParamCaption}\item[{}]{\$valeur }\end{DoxyParamCaption})}
+
+teste si une chaîne est un entier
+
+Teste si la chaîne ne contient que des chiffres
+
+
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$valeur} & la chaîne testée \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+boolean \$ok vrai ou faux 
+\end{DoxyReturn}
+\mbox{\Hypertarget{fonctions_8inc_8php_a84de5caad41b5a853d48722806e001f6}\label{fonctions_8inc_8php_a84de5caad41b5a853d48722806e001f6}} 
+\index{fonctions.inc.php@{fonctions.inc.php}!estUnCp@{estUnCp}}
+\index{estUnCp@{estUnCp}!fonctions.inc.php@{fonctions.inc.php}}
+\doxysubsubsection{\texorpdfstring{estUnCp()}{estUnCp()}}
+{\footnotesize\ttfamily est\+Un\+Cp (\begin{DoxyParamCaption}\item[{}]{\$code\+Postal }\end{DoxyParamCaption})}
+
+teste si une chaîne a un format de code postal
+
+Teste le nombre de caractères de la chaîne et le type entier (composé de chiffres)
+
+
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$code\+Postal} & la chaîne testée \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+boolean \$ok vrai ou faux 
+\end{DoxyReturn}
+\mbox{\Hypertarget{fonctions_8inc_8php_aead423fbfa9fbd9217e69173452122c7}\label{fonctions_8inc_8php_aead423fbfa9fbd9217e69173452122c7}} 
+\index{fonctions.inc.php@{fonctions.inc.php}!estUnMail@{estUnMail}}
+\index{estUnMail@{estUnMail}!fonctions.inc.php@{fonctions.inc.php}}
+\doxysubsubsection{\texorpdfstring{estUnMail()}{estUnMail()}}
+{\footnotesize\ttfamily est\+Un\+Mail (\begin{DoxyParamCaption}\item[{}]{\$mail }\end{DoxyParamCaption})}
+
+Teste si une chaîne a le format d\textquotesingle{}un mail
+
+Utilise les expressions régulières
+
+
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$mail} & la chaîne testée \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+boolean \$ok vrai ou faux 
+\end{DoxyReturn}
+\mbox{\Hypertarget{fonctions_8inc_8php_a810b47f6ec8b91f7e04c5069352184ec}\label{fonctions_8inc_8php_a810b47f6ec8b91f7e04c5069352184ec}} 
+\index{fonctions.inc.php@{fonctions.inc.php}!getErreursSaisieCommande@{getErreursSaisieCommande}}
+\index{getErreursSaisieCommande@{getErreursSaisieCommande}!fonctions.inc.php@{fonctions.inc.php}}
+\doxysubsubsection{\texorpdfstring{getErreursSaisieCommande()}{getErreursSaisieCommande()}}
+{\footnotesize\ttfamily get\+Erreurs\+Saisie\+Commande (\begin{DoxyParamCaption}\item[{}]{\$nom,  }\item[{}]{\$rue,  }\item[{}]{\$ville,  }\item[{}]{\$cp,  }\item[{}]{\$mail }\end{DoxyParamCaption})}
+
+Retourne un tableau d\textquotesingle{}erreurs de saisie pour une commande
+
+
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$nom} & chaîne testée \\
+\hline
+string & {\em \$rue} & chaîne \\
+\hline
+string & {\em \$ville} & chaîne \\
+\hline
+string & {\em \$cp} & chaîne \\
+\hline
+string & {\em \$mail} & chaîne \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+array \$les\+Erreurs un tableau de chaînes d\textquotesingle{}erreurs 
+\end{DoxyReturn}
+\mbox{\Hypertarget{fonctions_8inc_8php_a48c91481f78242cdd549482fc63337f3}\label{fonctions_8inc_8php_a48c91481f78242cdd549482fc63337f3}} 
+\index{fonctions.inc.php@{fonctions.inc.php}!getErreursSaisieProduit@{getErreursSaisieProduit}}
+\index{getErreursSaisieProduit@{getErreursSaisieProduit}!fonctions.inc.php@{fonctions.inc.php}}
+\doxysubsubsection{\texorpdfstring{getErreursSaisieProduit()}{getErreursSaisieProduit()}}
+{\footnotesize\ttfamily get\+Erreurs\+Saisie\+Produit (\begin{DoxyParamCaption}\item[{}]{\$desc,  }\item[{}]{\$prix,  }\item[{}]{\$img }\end{DoxyParamCaption})}
+
+Retourne un tableau d\textquotesingle{}erreurs de saisie pour un produit
+
+
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$desc} & description d\textquotesingle{}un produit \\
+\hline
+double & {\em \$prix} & prix d\textquotesingle{}un produit \\
+\hline
+string & {\em \$img} & url \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+array \$les\+Erreurs un tableau de chaînes d\textquotesingle{}erreurs 
+\end{DoxyReturn}
+\mbox{\Hypertarget{fonctions_8inc_8php_a59a95455bd9ca8f5253abd17d3072a97}\label{fonctions_8inc_8php_a59a95455bd9ca8f5253abd17d3072a97}} 
+\index{fonctions.inc.php@{fonctions.inc.php}!getLesIdProduitsDuPanier@{getLesIdProduitsDuPanier}}
+\index{getLesIdProduitsDuPanier@{getLesIdProduitsDuPanier}!fonctions.inc.php@{fonctions.inc.php}}
+\doxysubsubsection{\texorpdfstring{getLesIdProduitsDuPanier()}{getLesIdProduitsDuPanier()}}
+{\footnotesize\ttfamily get\+Les\+Id\+Produits\+Du\+Panier (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Retourne les produits du panier
+
+Retourne le tableau des identifiants de produit
+
+\begin{DoxyReturn}{Returns}
+array \$\+\_\+\+SESSION\mbox{[}\textquotesingle{}produits\textquotesingle{}\mbox{]} le tableau des id produits du panier 
+\end{DoxyReturn}
+\mbox{\Hypertarget{fonctions_8inc_8php_a0f86d06ad96a224939003cb9959f5b42}\label{fonctions_8inc_8php_a0f86d06ad96a224939003cb9959f5b42}} 
+\index{fonctions.inc.php@{fonctions.inc.php}!getQteProduit@{getQteProduit}}
+\index{getQteProduit@{getQteProduit}!fonctions.inc.php@{fonctions.inc.php}}
+\doxysubsubsection{\texorpdfstring{getQteProduit()}{getQteProduit()}}
+{\footnotesize\ttfamily get\+Qte\+Produit (\begin{DoxyParamCaption}\item[{}]{\$id\+Produit }\end{DoxyParamCaption})}
+
+Retourne les quantités des produits du panier
+
+Retourne le tableau des quantité de produit
+
+\begin{DoxyReturn}{Returns}
+array \$\+\_\+\+SESSION\mbox{[}\textquotesingle{}quantite\textquotesingle{}\mbox{]} le tableau des quantitées des produits du panier 
+\end{DoxyReturn}
+\mbox{\Hypertarget{fonctions_8inc_8php_a7c3f3b6845445b896480e3bd6b9ec6ae}\label{fonctions_8inc_8php_a7c3f3b6845445b896480e3bd6b9ec6ae}} 
+\index{fonctions.inc.php@{fonctions.inc.php}!initPanier@{initPanier}}
+\index{initPanier@{initPanier}!fonctions.inc.php@{fonctions.inc.php}}
+\doxysubsubsection{\texorpdfstring{initPanier()}{initPanier()}}
+{\footnotesize\ttfamily init\+Panier (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Initialise le panier
+
+Crée un tableau associatif \$\+\_\+\+SESSION\mbox{[}\textquotesingle{}produits\textquotesingle{}\mbox{]}en session dans le cas où il n\textquotesingle{}existe pas déjà \mbox{\Hypertarget{fonctions_8inc_8php_a40295a28174a0eccf95afe21322bbab7}\label{fonctions_8inc_8php_a40295a28174a0eccf95afe21322bbab7}} 
+\index{fonctions.inc.php@{fonctions.inc.php}!nbProduitsDuPanier@{nbProduitsDuPanier}}
+\index{nbProduitsDuPanier@{nbProduitsDuPanier}!fonctions.inc.php@{fonctions.inc.php}}
+\doxysubsubsection{\texorpdfstring{nbProduitsDuPanier()}{nbProduitsDuPanier()}}
+{\footnotesize\ttfamily nb\+Produits\+Du\+Panier (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Retourne le nombre de produits du panier
+
+Teste si la variable de session existe et retourne le nombre d\textquotesingle{}éléments de la variable session
+
+\begin{DoxyReturn}{Returns}
+int \$n 
+\end{DoxyReturn}
+\mbox{\Hypertarget{fonctions_8inc_8php_a9abbd8b2a086aad084ad4ebcaa79d740}\label{fonctions_8inc_8php_a9abbd8b2a086aad084ad4ebcaa79d740}} 
+\index{fonctions.inc.php@{fonctions.inc.php}!retirerDuPanier@{retirerDuPanier}}
+\index{retirerDuPanier@{retirerDuPanier}!fonctions.inc.php@{fonctions.inc.php}}
+\doxysubsubsection{\texorpdfstring{retirerDuPanier()}{retirerDuPanier()}}
+{\footnotesize\ttfamily retirer\+Du\+Panier (\begin{DoxyParamCaption}\item[{}]{\$id\+Produit }\end{DoxyParamCaption})}
+
+Retire un de produits du panier
+
+Recherche l\textquotesingle{}index de l\textquotesingle{}id\+Produit dans la variable session et détruit la valeur à ce rang
+
+
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$id\+Produit} & identifiant de produit \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{fonctions_8inc_8php_a6d2472e7b8bc9e7d0f546cece9d4f6c8}\label{fonctions_8inc_8php_a6d2472e7b8bc9e7d0f546cece9d4f6c8}} 
+\index{fonctions.inc.php@{fonctions.inc.php}!supprimerPanier@{supprimerPanier}}
+\index{supprimerPanier@{supprimerPanier}!fonctions.inc.php@{fonctions.inc.php}}
+\doxysubsubsection{\texorpdfstring{supprimerPanier()}{supprimerPanier()}}
+{\footnotesize\ttfamily supprimer\+Panier (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Supprime le panier
+
+Supprime le tableau associatif \$\+\_\+\+SESSION\mbox{[}\textquotesingle{}produits\textquotesingle{}\mbox{]} 

@@ -257,4 +257,29 @@ function getErreursSaisieCommande($nom,$rue,$ville,$cp,$mail)
 	}
 	return $lesErreurs;
 }
+/**
+ * Retourne un tableau d'erreurs de saisie pour un produit
+ *
+ * @param string $desc description d'un produit
+ * @param double $prix prix d'un produit
+ * @param string $img url
+ * @return array $lesErreurs un tableau de chaînes d'erreurs
+*/
+function getErreursSaisieProduit($desc,$prix,$img)
+{
+	$lesErreurs = array();
+	if($desc=="")
+	{
+		$lesErreurs[]="Il faut saisir le champ description";
+	}
+	if($prix=="")
+	{
+	$lesErreurs[]="Il faut saisir le champ prix";
+	}
+	if($img=="")
+	{
+		$lesErreurs[]="Il faut saisir le champ image";
+	}
+	return $lesErreurs;
+}
 ?>

@@ -4,9 +4,10 @@ foreach( $lesCategories as $uneCategorie)
 {
 	$idCategorie = $uneCategorie['id'];
 	$libCategorie = $uneCategorie['libelle'];
-	?>
+	$uc=$_REQUEST['uc'];
+?>
 	<li>
-		<a href="index.php?uc=voirProduits&categorie=<?php echo $idCategorie ?>&action=voirProduits">
+		<a href="index.php?uc=<?php echo $uc ?>&categorie=<?php echo $idCategorie ?>&action=voirProduits">
 		<?php echo $libCategorie ?></a>
 	</li>
 <?php

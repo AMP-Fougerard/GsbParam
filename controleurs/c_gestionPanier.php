@@ -22,9 +22,7 @@ switch($action)
 	{
 		$idProduit=$_REQUEST['produit'];
 		retirerDuPanier($idProduit);
-		$desIdProduit = getLesIdProduitsDuPanier();
-		$lesProduitsDuPanier = getLesProduitsDuTableau($desIdProduit);
-		include("vues/v_panier.php");
+		header('Location: ?uc=gererPanier&action=voirPanier');
 		break;
 	}
 	case 'viderPanier':

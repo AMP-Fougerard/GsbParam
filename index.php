@@ -5,20 +5,23 @@ require_once("modele/fonctions.inc.php");
 require_once("modele/bd.produits.inc.php");
 require_once("modele/bd.client.inc.php");
 
-if (isset($_SESSION['mail'])){
-	include("vues/v_bandeau_connection.php") ;
-} else {
-	include("vues/v_bandeau.html") ;
-}
-
-
 if(!isset($_REQUEST['uc']))
      $uc = 'accueil'; // si $_GET['uc'] n'existe pas , $uc reçoit une valeur par défaut
 else
 	$uc = $_REQUEST['uc'];
 
+
+if (isset($_SESSION['mail'])){
+	include("vues/v_bandeauConnection.php") ;
+} elseif($uc=='administrer') {
+	include("vues/v_bandeauAdmin.php") ;
+} else {
+	include("vues/v_bandeau.html") ;
+}
+
 // var_dump($_SESSION);
 // var_dump($_REQUEST);
+// var_dump($_POST);
 
 if (isset($_SESSION['msg'])) {
 	$message = $_SESSION['msg'];

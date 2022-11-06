@@ -1,0 +1,232 @@
+\hypertarget{bd_8produits_8inc_8php}{}\doxysection{bd.\+produits.\+inc.\+php File Reference}
+\label{bd_8produits_8inc_8php}\index{bd.produits.inc.php@{bd.produits.inc.php}}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{bd_8produits_8inc_8php_a7dbb1b18a0595e47be50344fdc117ff5}{get\+Les\+Categories}} ()
+\item 
+\mbox{\hyperlink{bd_8produits_8inc_8php_abe2e7e466345ae4ee73c3731982361aa}{get\+Les\+Infos\+Categorie}} (\$id\+Categorie)
+\item 
+\mbox{\hyperlink{bd_8produits_8inc_8php_af15abffbffadfc257447ba5b53960f1f}{get\+Les\+Produits}} ()
+\item 
+\mbox{\hyperlink{bd_8produits_8inc_8php_a89d69a70c672e0962deab06c8fd9d9dc}{get\+Les\+Produits\+De\+Categorie}} (\$id\+Categorie)
+\item 
+\mbox{\hyperlink{bd_8produits_8inc_8php_af8395c02ee51ef22a209dbe6759b2451}{get\+Les\+Produits\+Du\+Tableau}} (\$des\+Id\+Produit)
+\item 
+\mbox{\hyperlink{bd_8produits_8inc_8php_a289e5a1cfaeed1ffcfdfadf5857adf3c}{get\+Produit}} (\$id\+Produit)
+\item 
+\mbox{\hyperlink{bd_8produits_8inc_8php_ac07f7cd2bd69f27908387944ca0f5bb6}{creer\+Produit}} (\$desc, \$prix, \$img, \$categ)
+\item 
+\mbox{\hyperlink{bd_8produits_8inc_8php_a407176226e63c73fbae619fe8358e2cc}{creer\+Commande}} (\$mail, \$les\+Id\+Produits)
+\item 
+\mbox{\hyperlink{bd_8produits_8inc_8php_a62164a276f8c97d82a7db9d9debf84ab}{get\+Les\+Commandes\+Du\+Mois}} (\$mois, \$an)
+\item 
+\mbox{\hyperlink{bd_8produits_8inc_8php_a31f0091ca4a5e0f9693ac677504c74a4}{test\+Id\+Cmd}} (\$id)
+\item 
+\mbox{\hyperlink{bd_8produits_8inc_8php_ac85b8b4a4de025e4f2647bff5e2a6164}{supprimer\+Produit}} (\$id\+Produit)
+\item 
+\mbox{\hyperlink{bd_8produits_8inc_8php_a75acc44f16a2b64ac95e54c967e6c58e}{modifier\+Produit}} (\$id\+Produit, \$desc, \$prix, \$img, \$categ)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Mission 3 \+: architecture MVC \mbox{\hyperlink{namespace_gsb_param}{Gsb\+Param}}
+
+\begin{DoxyAuthor}{Author}
+Marielle Jouin \href{mailto:jouin.marielle@gmail.com}{\texttt{ jouin.\+marielle@gmail.\+com}} 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+2.\+0 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+juin 2021
+\end{DoxyDate}
+contient les fonctions d\textquotesingle{}accès BD à la table produits 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{bd_8produits_8inc_8php_a407176226e63c73fbae619fe8358e2cc}\label{bd_8produits_8inc_8php_a407176226e63c73fbae619fe8358e2cc}} 
+\index{bd.produits.inc.php@{bd.produits.inc.php}!creerCommande@{creerCommande}}
+\index{creerCommande@{creerCommande}!bd.produits.inc.php@{bd.produits.inc.php}}
+\doxysubsubsection{\texorpdfstring{creerCommande()}{creerCommande()}}
+{\footnotesize\ttfamily creer\+Commande (\begin{DoxyParamCaption}\item[{}]{\$mail,  }\item[{}]{\$les\+Id\+Produits }\end{DoxyParamCaption})}
+
+Crée une commande à partir des arguments validés passés en paramètre, crée les lignes de commandes dans la table contenir à partir du tableau d\textquotesingle{}id\+Produit passé en paramètre
+
+
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$mail} & mail du client \\
+\hline
+array & {\em \$les\+Id\+Produit} & tableau associatif contenant les id des produits commandés \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{bd_8produits_8inc_8php_ac07f7cd2bd69f27908387944ca0f5bb6}\label{bd_8produits_8inc_8php_ac07f7cd2bd69f27908387944ca0f5bb6}} 
+\index{bd.produits.inc.php@{bd.produits.inc.php}!creerProduit@{creerProduit}}
+\index{creerProduit@{creerProduit}!bd.produits.inc.php@{bd.produits.inc.php}}
+\doxysubsubsection{\texorpdfstring{creerProduit()}{creerProduit()}}
+{\footnotesize\ttfamily creer\+Produit (\begin{DoxyParamCaption}\item[{}]{\$desc,  }\item[{}]{\$prix,  }\item[{}]{\$img,  }\item[{}]{\$categ }\end{DoxyParamCaption})}
+
+Créer un produit avec les informations passée en argument retourne true si le produit est créer, sinon false
+
+\begin{DoxyReturn}{Returns}
+boolean \$tmp true/false 
+\end{DoxyReturn}
+\mbox{\Hypertarget{bd_8produits_8inc_8php_a7dbb1b18a0595e47be50344fdc117ff5}\label{bd_8produits_8inc_8php_a7dbb1b18a0595e47be50344fdc117ff5}} 
+\index{bd.produits.inc.php@{bd.produits.inc.php}!getLesCategories@{getLesCategories}}
+\index{getLesCategories@{getLesCategories}!bd.produits.inc.php@{bd.produits.inc.php}}
+\doxysubsubsection{\texorpdfstring{getLesCategories()}{getLesCategories()}}
+{\footnotesize\ttfamily get\+Les\+Categories (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Retourne toutes les catégories sous forme d\textquotesingle{}un tableau associatif
+
+\begin{DoxyReturn}{Returns}
+array \$les\+Lignes le tableau associatif des catégories 
+\end{DoxyReturn}
+\mbox{\Hypertarget{bd_8produits_8inc_8php_a62164a276f8c97d82a7db9d9debf84ab}\label{bd_8produits_8inc_8php_a62164a276f8c97d82a7db9d9debf84ab}} 
+\index{bd.produits.inc.php@{bd.produits.inc.php}!getLesCommandesDuMois@{getLesCommandesDuMois}}
+\index{getLesCommandesDuMois@{getLesCommandesDuMois}!bd.produits.inc.php@{bd.produits.inc.php}}
+\doxysubsubsection{\texorpdfstring{getLesCommandesDuMois()}{getLesCommandesDuMois()}}
+{\footnotesize\ttfamily get\+Les\+Commandes\+Du\+Mois (\begin{DoxyParamCaption}\item[{}]{\$mois,  }\item[{}]{\$an }\end{DoxyParamCaption})}
+
+Retourne les produits concernés par le tableau des id\+Produits passée en argument
+
+
+\begin{DoxyParams}[1]{Parameters}
+int & {\em \$mois} & un numéro de mois entre 1 et 12 \\
+\hline
+int & {\em \$an} & une année \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+array \$les\+Commandes un tableau associatif contenant les infos des commandes du mois passé en paramètre 
+\end{DoxyReturn}
+\mbox{\Hypertarget{bd_8produits_8inc_8php_abe2e7e466345ae4ee73c3731982361aa}\label{bd_8produits_8inc_8php_abe2e7e466345ae4ee73c3731982361aa}} 
+\index{bd.produits.inc.php@{bd.produits.inc.php}!getLesInfosCategorie@{getLesInfosCategorie}}
+\index{getLesInfosCategorie@{getLesInfosCategorie}!bd.produits.inc.php@{bd.produits.inc.php}}
+\doxysubsubsection{\texorpdfstring{getLesInfosCategorie()}{getLesInfosCategorie()}}
+{\footnotesize\ttfamily get\+Les\+Infos\+Categorie (\begin{DoxyParamCaption}\item[{}]{\$id\+Categorie }\end{DoxyParamCaption})}
+
+Retourne toutes les informations d\textquotesingle{}une catégorie passée en paramètre
+
+
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$id\+Categorie} & l\textquotesingle{}id de la catégorie \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+array \$la\+Ligne le tableau associatif des informations de la catégorie 
+\end{DoxyReturn}
+\mbox{\Hypertarget{bd_8produits_8inc_8php_af15abffbffadfc257447ba5b53960f1f}\label{bd_8produits_8inc_8php_af15abffbffadfc257447ba5b53960f1f}} 
+\index{bd.produits.inc.php@{bd.produits.inc.php}!getLesProduits@{getLesProduits}}
+\index{getLesProduits@{getLesProduits}!bd.produits.inc.php@{bd.produits.inc.php}}
+\doxysubsubsection{\texorpdfstring{getLesProduits()}{getLesProduits()}}
+{\footnotesize\ttfamily get\+Les\+Produits (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Retourne sous forme d\textquotesingle{}un tableau associatif tous les produits
+
+\begin{DoxyReturn}{Returns}
+array \$les\+Lignes un tableau associatif contenant les produits de la categ passée en paramètre 
+\end{DoxyReturn}
+\mbox{\Hypertarget{bd_8produits_8inc_8php_a89d69a70c672e0962deab06c8fd9d9dc}\label{bd_8produits_8inc_8php_a89d69a70c672e0962deab06c8fd9d9dc}} 
+\index{bd.produits.inc.php@{bd.produits.inc.php}!getLesProduitsDeCategorie@{getLesProduitsDeCategorie}}
+\index{getLesProduitsDeCategorie@{getLesProduitsDeCategorie}!bd.produits.inc.php@{bd.produits.inc.php}}
+\doxysubsubsection{\texorpdfstring{getLesProduitsDeCategorie()}{getLesProduitsDeCategorie()}}
+{\footnotesize\ttfamily get\+Les\+Produits\+De\+Categorie (\begin{DoxyParamCaption}\item[{}]{\$id\+Categorie }\end{DoxyParamCaption})}
+
+Retourne sous forme d\textquotesingle{}un tableau associatif tous les produits de la catégorie passée en argument
+
+
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$id\+Categorie} & l\textquotesingle{}id de la catégorie dont on veut les produits \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+array \$les\+Lignes un tableau associatif contenant les produits de la categ passée en paramètre 
+\end{DoxyReturn}
+\mbox{\Hypertarget{bd_8produits_8inc_8php_af8395c02ee51ef22a209dbe6759b2451}\label{bd_8produits_8inc_8php_af8395c02ee51ef22a209dbe6759b2451}} 
+\index{bd.produits.inc.php@{bd.produits.inc.php}!getLesProduitsDuTableau@{getLesProduitsDuTableau}}
+\index{getLesProduitsDuTableau@{getLesProduitsDuTableau}!bd.produits.inc.php@{bd.produits.inc.php}}
+\doxysubsubsection{\texorpdfstring{getLesProduitsDuTableau()}{getLesProduitsDuTableau()}}
+{\footnotesize\ttfamily get\+Les\+Produits\+Du\+Tableau (\begin{DoxyParamCaption}\item[{}]{\$des\+Id\+Produit }\end{DoxyParamCaption})}
+
+Retourne les produits concernés par le tableau des id\+Produits passée en argument
+
+
+\begin{DoxyParams}[1]{Parameters}
+array & {\em \$des\+Id\+Produit} & tableau d\textquotesingle{}id\+Produits \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+array \$les\+Produits un tableau associatif contenant les infos des produits dont les id ont été passé en paramètre 
+\end{DoxyReturn}
+\mbox{\Hypertarget{bd_8produits_8inc_8php_a289e5a1cfaeed1ffcfdfadf5857adf3c}\label{bd_8produits_8inc_8php_a289e5a1cfaeed1ffcfdfadf5857adf3c}} 
+\index{bd.produits.inc.php@{bd.produits.inc.php}!getProduit@{getProduit}}
+\index{getProduit@{getProduit}!bd.produits.inc.php@{bd.produits.inc.php}}
+\doxysubsubsection{\texorpdfstring{getProduit()}{getProduit()}}
+{\footnotesize\ttfamily get\+Produit (\begin{DoxyParamCaption}\item[{}]{\$id\+Produit }\end{DoxyParamCaption})}
+
+Retourne un produit concerné par l\textquotesingle{}id\+Produit passée en argument
+
+
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$id\+Produit} & id d\textquotesingle{}un Produit \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+array \$un\+Produits un tableau associatif contenant les infos des produits dont l\textquotesingle{}id a été passé en paramètre 
+\end{DoxyReturn}
+\mbox{\Hypertarget{bd_8produits_8inc_8php_a75acc44f16a2b64ac95e54c967e6c58e}\label{bd_8produits_8inc_8php_a75acc44f16a2b64ac95e54c967e6c58e}} 
+\index{bd.produits.inc.php@{bd.produits.inc.php}!modifierProduit@{modifierProduit}}
+\index{modifierProduit@{modifierProduit}!bd.produits.inc.php@{bd.produits.inc.php}}
+\doxysubsubsection{\texorpdfstring{modifierProduit()}{modifierProduit()}}
+{\footnotesize\ttfamily modifier\+Produit (\begin{DoxyParamCaption}\item[{}]{\$id\+Produit,  }\item[{}]{\$desc,  }\item[{}]{\$prix,  }\item[{}]{\$img,  }\item[{}]{\$categ }\end{DoxyParamCaption})}
+
+Modifie le produit ayant comme id l\textquotesingle{}id donnée en paramètre avec les élèments donnée en plus en paramètre Si le produit est modifier alors on retourne true, sinon false
+
+
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$id\+Produit} & l\textquotesingle{}id du produit \\
+\hline
+string & {\em \$desc} & description du produit \\
+\hline
+double & {\em \$produit} & prix du produit \\
+\hline
+string & {\em \$img} & l\textquotesingle{}image du produit \\
+\hline
+string & {\em \$categ} & catégorie du produit \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+boolean \$tmp true/false 
+\end{DoxyReturn}
+\mbox{\Hypertarget{bd_8produits_8inc_8php_ac85b8b4a4de025e4f2647bff5e2a6164}\label{bd_8produits_8inc_8php_ac85b8b4a4de025e4f2647bff5e2a6164}} 
+\index{bd.produits.inc.php@{bd.produits.inc.php}!supprimerProduit@{supprimerProduit}}
+\index{supprimerProduit@{supprimerProduit}!bd.produits.inc.php@{bd.produits.inc.php}}
+\doxysubsubsection{\texorpdfstring{supprimerProduit()}{supprimerProduit()}}
+{\footnotesize\ttfamily supprimer\+Produit (\begin{DoxyParamCaption}\item[{}]{\$id\+Produit }\end{DoxyParamCaption})}
+
+Supprime le produit ayant comme id l\textquotesingle{}id donnée en paramètre Si le produit est effacer alors on retourne true, sinon false
+
+
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$id\+Produit} & l\textquotesingle{}id du produit \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+boolean \$tmp true/false 
+\end{DoxyReturn}
+\mbox{\Hypertarget{bd_8produits_8inc_8php_a31f0091ca4a5e0f9693ac677504c74a4}\label{bd_8produits_8inc_8php_a31f0091ca4a5e0f9693ac677504c74a4}} 
+\index{bd.produits.inc.php@{bd.produits.inc.php}!testIdCmd@{testIdCmd}}
+\index{testIdCmd@{testIdCmd}!bd.produits.inc.php@{bd.produits.inc.php}}
+\doxysubsubsection{\texorpdfstring{testIdCmd()}{testIdCmd()}}
+{\footnotesize\ttfamily test\+Id\+Cmd (\begin{DoxyParamCaption}\item[{}]{\$id }\end{DoxyParamCaption})}
+
+Test l\textquotesingle{}existence d\textquotesingle{}un id de commande Retourne true si l\textquotesingle{}id rentrer en paramètre n\textquotesingle{}existe pas déja sinon false
+
+
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$id} & id d\textquotesingle{}une commande \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+boolean \$rep true/false 
+\end{DoxyReturn}

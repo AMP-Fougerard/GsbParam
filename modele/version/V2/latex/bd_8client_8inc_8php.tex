@@ -1,0 +1,215 @@
+\hypertarget{bd_8client_8inc_8php}{}\doxysection{bd.\+client.\+inc.\+php File Reference}
+\label{bd_8client_8inc_8php}\index{bd.client.inc.php@{bd.client.inc.php}}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{bd_8client_8inc_8php_a50b8889edda3f4b323bf0703d135035d}{creer\+Client}} (\$nom, \$prenom, \$rue, \$cp, \$ville, \$mail, \$mdp)
+\item 
+\mbox{\hyperlink{bd_8client_8inc_8php_aa4d62740f041c1f4937988e53afb8c17}{connexion}} (\$mail)
+\item 
+\mbox{\hyperlink{bd_8client_8inc_8php_a6d9a7dfbd3357386821c0692c7851ce2}{get\+Erreurs\+Saisie\+Client}} (\$nom, \$prenom, \$rue, \$ville, \$cp, \$mail, \$mdp1, \$mdp2)
+\item 
+\mbox{\hyperlink{bd_8client_8inc_8php_a6b8e78da0d360161f8581ea1a0e33ac8}{get\+Erreurs\+Saisie\+Connexion}} (\$mail, \$mdp)
+\item 
+\mbox{\hyperlink{bd_8client_8inc_8php_adf440c98b13727048d068551ca1f6fdb}{get\+Nom\+Client}} (\$mail)
+\item 
+\mbox{\hyperlink{bd_8client_8inc_8php_a334e6112f4af368eea2f2d3bc19f1d05}{get\+Id\+Inexistant}} ()
+\item 
+\mbox{\hyperlink{bd_8client_8inc_8php_a4608821e4320bd0497cb53fb90715555}{get\+Id\+Client}} (\$mail)
+\item 
+\mbox{\hyperlink{bd_8client_8inc_8php_aac99fe0ed03736f2628fd9e97e67665a}{get\+Nom\+Admin}} (\$id\+Admin)
+\item 
+\mbox{\hyperlink{bd_8client_8inc_8php_a41e2faadd312b59a743081174f0bef48}{get\+Id\+Admin}} (\$nom\+Admin)
+\item 
+\mbox{\hyperlink{bd_8client_8inc_8php_a0c5c4b5ddd6ce6ebb22dd8646af3f1f0}{verify\+Exist\+Admin}} (\$nom, \$mdp)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Mission 3 \+: architecture MVC \mbox{\hyperlink{namespace_gsb_param}{Gsb\+Param}}
+
+\begin{DoxyAuthor}{Author}
+Antonin Fougerard \href{mailto:antonin.fougerard@gmail.com}{\texttt{ antonin.\+fougerard@gmail.\+com}} 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+2.\+0 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+octobre 2022
+\end{DoxyDate}
+contient les fonctions d\textquotesingle{}accès BD à la table clients 
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{bd_8client_8inc_8php_aa4d62740f041c1f4937988e53afb8c17}\label{bd_8client_8inc_8php_aa4d62740f041c1f4937988e53afb8c17}} 
+\index{bd.client.inc.php@{bd.client.inc.php}!connexion@{connexion}}
+\index{connexion@{connexion}!bd.client.inc.php@{bd.client.inc.php}}
+\doxysubsubsection{\texorpdfstring{connexion()}{connexion()}}
+{\footnotesize\ttfamily connexion (\begin{DoxyParamCaption}\item[{}]{\$mail }\end{DoxyParamCaption})}
+
+Teste client
+
+Test un compte client à partir des arguments validés passés en paramètre, crée les lignes de commandes dans la table contenir à partir du tableau d\textquotesingle{}id\+Client passé en paramètre 
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$nom} & nom du client \\
+\hline
+string & {\em \$rue} & rue du client \\
+\hline
+string & {\em \$cp} & cp du client \\
+\hline
+string & {\em \$ville} & ville du client \\
+\hline
+string & {\em \$mail} & mail du client \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{bd_8client_8inc_8php_a50b8889edda3f4b323bf0703d135035d}\label{bd_8client_8inc_8php_a50b8889edda3f4b323bf0703d135035d}} 
+\index{bd.client.inc.php@{bd.client.inc.php}!creerClient@{creerClient}}
+\index{creerClient@{creerClient}!bd.client.inc.php@{bd.client.inc.php}}
+\doxysubsubsection{\texorpdfstring{creerClient()}{creerClient()}}
+{\footnotesize\ttfamily creer\+Client (\begin{DoxyParamCaption}\item[{}]{\$nom,  }\item[{}]{\$prenom,  }\item[{}]{\$rue,  }\item[{}]{\$cp,  }\item[{}]{\$ville,  }\item[{}]{\$mail,  }\item[{}]{\$mdp }\end{DoxyParamCaption})}
+
+Crée un compte client
+
+Crée un compte client à partir des arguments validés passés en paramètre, l\textquotesingle{}identifiant est construit à partir du maximum existant ; crée les lignes de commandes dans la table contenir à partir du tableau d\textquotesingle{}id\+Client passé en paramètre 
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$nom} & nom du client \\
+\hline
+string & {\em \$rue} & rue du client \\
+\hline
+string & {\em \$cp} & cp du client \\
+\hline
+string & {\em \$ville} & ville du client \\
+\hline
+string & {\em \$mail} & mail du client \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{bd_8client_8inc_8php_a6d9a7dfbd3357386821c0692c7851ce2}\label{bd_8client_8inc_8php_a6d9a7dfbd3357386821c0692c7851ce2}} 
+\index{bd.client.inc.php@{bd.client.inc.php}!getErreursSaisieClient@{getErreursSaisieClient}}
+\index{getErreursSaisieClient@{getErreursSaisieClient}!bd.client.inc.php@{bd.client.inc.php}}
+\doxysubsubsection{\texorpdfstring{getErreursSaisieClient()}{getErreursSaisieClient()}}
+{\footnotesize\ttfamily get\+Erreurs\+Saisie\+Client (\begin{DoxyParamCaption}\item[{}]{\$nom,  }\item[{}]{\$prenom,  }\item[{}]{\$rue,  }\item[{}]{\$ville,  }\item[{}]{\$cp,  }\item[{}]{\$mail,  }\item[{}]{\$mdp1,  }\item[{}]{\$mdp2 }\end{DoxyParamCaption})}
+
+Retourne un tableau d\textquotesingle{}erreurs de saisie pour un client 
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$nom} & chaîne testée \\
+\hline
+string & {\em \$rue} & chaîne \\
+\hline
+string & {\em \$ville} & chaîne \\
+\hline
+string & {\em \$cp} & chaîne \\
+\hline
+string & {\em \$mail} & chaîne \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+array \$les\+Erreurs un tableau de chaînes d\textquotesingle{}erreurs 
+\end{DoxyReturn}
+\mbox{\Hypertarget{bd_8client_8inc_8php_a6b8e78da0d360161f8581ea1a0e33ac8}\label{bd_8client_8inc_8php_a6b8e78da0d360161f8581ea1a0e33ac8}} 
+\index{bd.client.inc.php@{bd.client.inc.php}!getErreursSaisieConnexion@{getErreursSaisieConnexion}}
+\index{getErreursSaisieConnexion@{getErreursSaisieConnexion}!bd.client.inc.php@{bd.client.inc.php}}
+\doxysubsubsection{\texorpdfstring{getErreursSaisieConnexion()}{getErreursSaisieConnexion()}}
+{\footnotesize\ttfamily get\+Erreurs\+Saisie\+Connexion (\begin{DoxyParamCaption}\item[{}]{\$mail,  }\item[{}]{\$mdp }\end{DoxyParamCaption})}
+
+Retourne un tableau d\textquotesingle{}erreurs de saisie pour une connexion 
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$mail} & chaîne testée \\
+\hline
+string & {\em \$mdp} & chaîne \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+array \$les\+Erreurs un tableau de chaînes d\textquotesingle{}erreurs 
+\end{DoxyReturn}
+\mbox{\Hypertarget{bd_8client_8inc_8php_a41e2faadd312b59a743081174f0bef48}\label{bd_8client_8inc_8php_a41e2faadd312b59a743081174f0bef48}} 
+\index{bd.client.inc.php@{bd.client.inc.php}!getIdAdmin@{getIdAdmin}}
+\index{getIdAdmin@{getIdAdmin}!bd.client.inc.php@{bd.client.inc.php}}
+\doxysubsubsection{\texorpdfstring{getIdAdmin()}{getIdAdmin()}}
+{\footnotesize\ttfamily get\+Id\+Admin (\begin{DoxyParamCaption}\item[{}]{\$nom\+Admin }\end{DoxyParamCaption})}
+
+Retourne l\textquotesingle{}id de l\textquotesingle{}administrateur grace au nom donné en paramètre
+
+
+\begin{DoxyParams}{Parameters}
+{\em \$nom\+Admin} & chaine de caractère \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\$id int 
+\end{DoxyReturn}
+\mbox{\Hypertarget{bd_8client_8inc_8php_a4608821e4320bd0497cb53fb90715555}\label{bd_8client_8inc_8php_a4608821e4320bd0497cb53fb90715555}} 
+\index{bd.client.inc.php@{bd.client.inc.php}!getIdClient@{getIdClient}}
+\index{getIdClient@{getIdClient}!bd.client.inc.php@{bd.client.inc.php}}
+\doxysubsubsection{\texorpdfstring{getIdClient()}{getIdClient()}}
+{\footnotesize\ttfamily get\+Id\+Client (\begin{DoxyParamCaption}\item[{}]{\$mail }\end{DoxyParamCaption})}
+
+Retourne l\textquotesingle{}Id du client possédant le mail entrer en paramètre
+
+
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$mail} & mail client \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+string \$res id client 
+\end{DoxyReturn}
+\mbox{\Hypertarget{bd_8client_8inc_8php_a334e6112f4af368eea2f2d3bc19f1d05}\label{bd_8client_8inc_8php_a334e6112f4af368eea2f2d3bc19f1d05}} 
+\index{bd.client.inc.php@{bd.client.inc.php}!getIdInexistant@{getIdInexistant}}
+\index{getIdInexistant@{getIdInexistant}!bd.client.inc.php@{bd.client.inc.php}}
+\doxysubsubsection{\texorpdfstring{getIdInexistant()}{getIdInexistant()}}
+{\footnotesize\ttfamily get\+Id\+Inexistant (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Retourne un id en héxadécimal qui n\textquotesingle{}existe pas dans la bdd
+
+\begin{DoxyReturn}{Returns}
+array \$id chaîne de caractère 
+\end{DoxyReturn}
+\mbox{\Hypertarget{bd_8client_8inc_8php_aac99fe0ed03736f2628fd9e97e67665a}\label{bd_8client_8inc_8php_aac99fe0ed03736f2628fd9e97e67665a}} 
+\index{bd.client.inc.php@{bd.client.inc.php}!getNomAdmin@{getNomAdmin}}
+\index{getNomAdmin@{getNomAdmin}!bd.client.inc.php@{bd.client.inc.php}}
+\doxysubsubsection{\texorpdfstring{getNomAdmin()}{getNomAdmin()}}
+{\footnotesize\ttfamily get\+Nom\+Admin (\begin{DoxyParamCaption}\item[{}]{\$id\+Admin }\end{DoxyParamCaption})}
+
+Retourne le nom de l\textquotesingle{}administrateur grace à un id donné en paramètre
+
+
+\begin{DoxyParams}[1]{Parameters}
+int & {\em \$id\+Admin} & id administrateur \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+string \$nom chaine de caractère 
+\end{DoxyReturn}
+\mbox{\Hypertarget{bd_8client_8inc_8php_adf440c98b13727048d068551ca1f6fdb}\label{bd_8client_8inc_8php_adf440c98b13727048d068551ca1f6fdb}} 
+\index{bd.client.inc.php@{bd.client.inc.php}!getNomClient@{getNomClient}}
+\index{getNomClient@{getNomClient}!bd.client.inc.php@{bd.client.inc.php}}
+\doxysubsubsection{\texorpdfstring{getNomClient()}{getNomClient()}}
+{\footnotesize\ttfamily get\+Nom\+Client (\begin{DoxyParamCaption}\item[{}]{\$mail }\end{DoxyParamCaption})}
+
+Retourne le nom et prenom du client en prenant comme paramètre un mail
+
+
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$mail} & chaîne testée \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+array \$res\mbox{[}\textquotesingle{}nom\textquotesingle{}\mbox{]} chaîne de caractère 
+\end{DoxyReturn}
+\mbox{\Hypertarget{bd_8client_8inc_8php_a0c5c4b5ddd6ce6ebb22dd8646af3f1f0}\label{bd_8client_8inc_8php_a0c5c4b5ddd6ce6ebb22dd8646af3f1f0}} 
+\index{bd.client.inc.php@{bd.client.inc.php}!verifyExistAdmin@{verifyExistAdmin}}
+\index{verifyExistAdmin@{verifyExistAdmin}!bd.client.inc.php@{bd.client.inc.php}}
+\doxysubsubsection{\texorpdfstring{verifyExistAdmin()}{verifyExistAdmin()}}
+{\footnotesize\ttfamily verify\+Exist\+Admin (\begin{DoxyParamCaption}\item[{}]{\$nom,  }\item[{}]{\$mdp }\end{DoxyParamCaption})}
+
+Vérifie si les informations de l\textquotesingle{}administrateur entrer en paramètre existe dans la BD true si l\textquotesingle{}administrateur existe, false sinon
+
+
+\begin{DoxyParams}[1]{Parameters}
+string & {\em \$nom} & nom administrateur \\
+\hline
+string & {\em \$mdp} & chaine de caractère \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+boolean \$tmp true/false 
+\end{DoxyReturn}
