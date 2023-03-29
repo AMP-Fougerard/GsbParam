@@ -167,7 +167,7 @@ include_once 'bd.inc.php';
 	        $req = "select max(id) as 'id' from produit where id_categorie='$categ'";
 	        $res = $monPdo->query($req);
 	        $idProduitMax = $res->fetch(PDO::FETCH_ASSOC);
-	        $char = strtolower($categ{0});
+	        $char = strtolower(substr($categ,0));
 	        $nbr = str_replace($char, '', $idProduitMax['id']);
 	        $nbr++;
 	        if(strlen($nbr)==1)
@@ -325,7 +325,7 @@ include_once 'bd.inc.php';
 		        $resMax = $monPdo->query($reqMax);
 		        $idProduitMin = $resMin->fetch(PDO::FETCH_ASSOC);
 		        $idProduitMax = $resMax->fetch(PDO::FETCH_ASSOC);
-		        $char = strtolower($categ{0});
+		        $char = strtolower(substr($categ,0));
 		        $nbrMin = str_replace($char, '', $idProduitMin['min(id)']);
 		        $nbrMax = str_replace($char, '', $idProduitMax['max(id)']);
 		        $nbrMin--;
