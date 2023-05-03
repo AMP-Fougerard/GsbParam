@@ -7,13 +7,13 @@ switch($action)
 	case 'voirCategories':
 	{
   		$lesCategories = getLesCategories();
-		include("vues/v_categories.php");
+		include("vues/v_choixCategorie.php");
   		break;
 	}
 	case 'voirProduits' :
 	{
 		$lesCategories = getLesCategories();
-		include("vues/v_categories.php");
+		include("vues/v_choixCategorie.php");
   		$categorie = $_REQUEST['categorie'];
 		$lesProduits = getLesProduitsDeCategorie($categorie);
 		include("vues/v_produitsDeCategorie.php");

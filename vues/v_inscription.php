@@ -2,7 +2,7 @@
 <form method="POST" action="index.php?uc=gererClient&action=inscription">
    <fieldset>
      <legend>Insciption</legend>
-		<p>
+		<!--<p>
 			<label for="nom">Nom*</label>
 			<input id="nom" type="text" name="nom" value="<?php echo $nom ?>" size="30" maxlength="45">
 		</p>
@@ -21,7 +21,7 @@
       <p>
          <label for="ville">ville* </label>
          <input id="ville" type="text" name="ville"  value="<?php echo $ville ?>" size="30" maxlength="30">
-      </p>
+      </p>-->
       <p>
          <label for="mail">mail* </label>
          <input id="mail" type="text"  name="mail" value="<?php echo $mail ?>" size ="25" maxlength="25">
