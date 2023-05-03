@@ -3,7 +3,7 @@
 <img src="images/logo.jpg"	alt="GsbLogo" title="GsbLogo"/>
 </div>
 <!-- Phrase de connection -->
-<h3> Bonjour, <?php echo getNomClient($_SESSION['mail']); ?></h3>
+<h3> Bonjour, <?php echo strstr($_SESSION['mail'],'@',true); ?></h3>
 <!--  Menu haut -->
 <ul id="menu">
 	<li><a href="index.php?uc=accueil"> Accueil </a></li>

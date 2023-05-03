@@ -29,7 +29,7 @@ include_once 'bd.inc.php';
 			$hash = password_hash($mdp, PASSWORD_DEFAULT);
 	        $monPdo = connexionPDO();
 
-			$req = $monPdo->prepare("insert into compte (mail,mdp,admin) values (:mail,:mdp,false)");
+			$req = $monPdo->prepare("insert into compte (mail,pass,admin) values (:mail,:mdp,false)");
 			$res = $req->execute(array('mail'=>$mail,'mdp'=>$hash));
 
 			if (!is_null($res)){
@@ -43,6 +43,7 @@ include_once 'bd.inc.php';
 		}
 		return $tmp;
 	}
+	
 	/**
 	 * Teste client
 	 *
@@ -79,7 +80,7 @@ include_once 'bd.inc.php';
 	*/
 	function getErreursSaisieClient($mail,$mdp1,$mdp2)
 	{
-		
+		$lesErreurs= array();
 		if($mail=="")
 		{
 			$lesErreurs[]="Il faut saisir le champ mail";
@@ -122,7 +123,7 @@ include_once 'bd.inc.php';
 	{
 		$lesErreurs = array();
 		$monPdo = connexionPDO();
-		$req = $monPdo->prepare("select mail,mdp from compte where mail=:mail");
+		$req = $monPdo->prepare("select mail,pass from compte where mail=:mail");
 		$res = $req->execute(array('mail'=>$mail));
 		$result = $req -> fetch(PDO::FETCH_ASSOC);
 		if($mail=="")
@@ -149,7 +150,7 @@ include_once 'bd.inc.php';
 					} 
 					else 
 					{
-						if(!password_verify($mdp, $result['mdp']))
+						if(!password_verify($mdp, $result['pass']))
 						{
 							$lesErreurs[]= "Le mot de passe est incorrect";
 						}

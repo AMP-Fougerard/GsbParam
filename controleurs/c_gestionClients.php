@@ -5,18 +5,18 @@ switch($action)
 {
 	case 'sInscrire':
 	{	
-		$nom ='';$prenom='';$rue='';$ville ='';$cp='';$mail='';
+		$mail='';
 		include("vues/v_inscription.php");
 		break;
 	}
 	case 'inscription':
 	{
 		if (count($_POST)>0){
-			$nom =$_POST['nom'];$prenom =$_POST['prenom'];$rue =$_POST['rue'];$ville =$_POST['ville'];$cp=$_POST['cp'];$mail=$_POST['mail'];$mdp1=$_POST['mdp1'];$mdp2=$_POST['mdp2'];
+			$mail=$_POST['mail'];$mdp1=$_POST['mdp1'];$mdp2=$_POST['mdp2'];
 		} else {
-			$nom ='';$prenom='';$rue='';$ville ='';$cp='';$mail='';$mdp1='';$mdp2='';
+			$mail='';$mdp1='';$mdp2='';
 		}
-	 	$msgErreurs = getErreursSaisieClient($nom,$prenom,$rue,$ville,$cp,$mail,$mdp1,$mdp2);
+	 	$msgErreurs = getErreursSaisieClient($mail,$mdp1,$mdp2);
 		if (count($msgErreurs)!=0)
 		{
 			include ("vues/v_erreurs.php");
@@ -24,7 +24,7 @@ switch($action)
 		}
 		else
 		{
-			if ( creerClient($nom,$prenom,$rue,$cp,$ville,$mail,$mdp1) ){
+			if ( creerClient($mail,$mdp1) ){
 				$_SESSION['msg']="Inscription terminé";
 				header('Location: ?uc=gererClient&action=seConnecter');
 			} else {
