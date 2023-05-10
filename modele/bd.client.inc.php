@@ -31,7 +31,6 @@ include_once 'bd.inc.php';
 
 			$req = $monPdo->prepare("insert into compte (mail,pass,admin) values (:mail,:mdp,false)");
 			$res = $req->execute(array('mail'=>$mail,'mdp'=>$hash));
-
 			if (!is_null($res)){
 				$tmp = true ;
 			}

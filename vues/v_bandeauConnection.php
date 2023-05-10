@@ -12,3 +12,4 @@
 	<li><a href="index.php?uc=gererPanier&action=voirPanier"> Voir son panier </a></li>
 	<li><a href="index.php?uc=gererClient&action=seDeconnecter"> Se déconnecter </a></li>
 </ul>
+<br>

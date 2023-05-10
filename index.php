@@ -1,9 +1,11 @@
 <?php
 session_start();
 include("vues/v_entete.html") ;
-require_once("modele/fonctions.inc.php");
+//require_once("modele/fonctions.inc.php");
 require_once("modele/bd.produits.inc.php");
 require_once("modele/bd.client.inc.php");
+require_once("modele/bd.avis.inc.php");
+require_once("modele/bd.panier.inc.php");
 
 if(!isset($_REQUEST['uc']))
      $uc = 'accueil'; // si $_GET['uc'] n'existe pas , $uc reçoit une valeur par défaut
@@ -19,9 +21,9 @@ if (isset($_SESSION['mail'])){
 	include("vues/v_bandeau.html") ;
 }
 
-// var_dump($_SESSION);
-// var_dump($_REQUEST);
-// var_dump($_POST);
+//var_dump($_SESSION);
+//var_dump($_REQUEST);
+//var_dump($_POST);
 
 if (isset($_SESSION['msg'])) {
 	$message = $_SESSION['msg'];

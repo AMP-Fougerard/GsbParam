@@ -65,8 +65,12 @@ include_once 'bd.inc.php';
 		try 
 		{
         $monPdo = connexionPDO();
-	    $req='select id, description, prix, image, id_categorie from produit';
-		$res = $monPdo->query($req);
+			$req = 'SELECT p.`id`, p.`libelle`, p.`description`, c.`prix`, c.`stock`, p.`image`, p.`id_categorie`, m.`nom_marque`
+				FROM `produit` p
+				JOIN `produitcontenance` c ON c.`id` = p.`id`
+				JOIN `marque` m ON m.`id_marque`=p.`id_marque`
+				WHERE c.`isBase` = 1';
+			$res = $monPdo -> query($req);
 		$lesLignes = $res->fetchAll(PDO::FETCH_ASSOC);
 		return $lesLignes; 
 		} 
@@ -88,9 +92,13 @@ include_once 'bd.inc.php';
 		try 
 		{
         $monPdo = connexionPDO();
-	    $req='select id, description, prix, image, id_categorie from produit where id_categorie ="'.$idCategorie.'"';
-		$res = $monPdo->query($req);
-		$lesLignes = $res->fetchAll(PDO::FETCH_ASSOC);
+	    $req = $monPdo -> prepare('SELECT p.`id`, p.`libelle`, p.`description`, c.`prix`, c.`stock`, p.`image`, p.`id_categorie`, m.`nom_marque`
+	    	FROM `produit` p
+				JOIN `produitcontenance` c ON c.`id` = p.`id`
+				JOIN `marque` m ON m.`id_marque`=p.`id_marque`
+				WHERE p.`id_categorie` = :idCateg AND c.`isBase` = 1');
+			$res = $req->execute(array('idCateg' => $idCategorie));
+		$lesLignes = $req->fetchAll(PDO::FETCH_ASSOC);
 		return $lesLignes; 
 		} 
 		catch (PDOException $e) 
@@ -99,33 +107,36 @@ include_once 'bd.inc.php';
         die();
 		}
 	}
+
+//TODO
 /**
  * Retourne les produits concernés par le tableau des idProduits passée en argument
  *
- * @param array $desIdProduit tableau d'idProduits
+ * @param array $desIdProduit tableau d'idProduit
  * @return array $lesProduits un tableau associatif contenant les infos des produits dont les id ont été passé en paramètre
 */
 	function getLesProduitsDuTableau($desIdProduit)
 	{
-		try 
-		{
-        $monPdo = connexionPDO();
-		$nbProduits = count($desIdProduit);
-		$lesProduits=array();
-		if($nbProduits != 0)
-		{
-			foreach($desIdProduit as $unIdProduit)
-			{
-				$req = 'select id, description, prix, image, id_categorie from produit where id = "'.$unIdProduit.'"';
-				$res = $monPdo->query($req);
-				$unProduit = $res->fetch(PDO::FETCH_ASSOC);
-				$lesProduits[] = $unProduit;
+		try {
+	        $monPdo = connexionPDO();
+			$nbProduits = count($desIdProduit);
+			$lesProduits=array();
+			if($nbProduits != 0) {
+				foreach($desIdProduit as $unIdProduit)
+				{
+					$req = $monPdo -> prepare('SELECT p.`id`, c.`id_contenance`, p.`libelle`, p.`description`, c.`prix`, c.`qte`, u.`unit_intitule`, p.`image`, p.`id_categorie`, m.`nom_marque`
+						FROM `produit` p
+						JOIN `produitcontenance` c ON c.`id` = p.`id`
+						JOIN `marque` m ON m.`id_marque`=p.`id_marque`
+						JOIN `unites` u ON u.`id_unit`=c.`id_unit`
+						WHERE p.`id` = :id AND c.`id_contenance` = :idCont');
+				$res = $req->execute(array('id' => $unIdProduit['id'],'idCont' => $unIdProduit['id_contenance']));
+					$unProduit = $req->fetch(PDO::FETCH_ASSOC);
+					$lesProduits[] = $unProduit;
+				}
 			}
-		}
-		return $lesProduits;
-		}
-		catch (PDOException $e) 
-		{
+			return $lesProduits;
+		}catch (PDOException $e){
         print "Erreur !: " . $e->getMessage();
         die();
 		}
@@ -141,8 +152,10 @@ include_once 'bd.inc.php';
 		try 
 		{
 	        $monPdo = connexionPDO();
-			$req = 'select id, description, prix, image, id_categorie from produit where id = "'.$idProduit.'"';
-			$res = $monPdo->query($req);
+			$req = $monPdo -> prepare('SELECT p.`id`, p.`description`, c.`prix`, p.`image`, p.`id_categorie` FROM `produit` p
+				JOIN `produitcontenance` c ON c.`id` = p.`id`
+				WHERE id = :id AND isBase = 1');
+			$res = $req->execute(array('id' => $idProduit));
 			$unProduit = $res->fetch(PDO::FETCH_ASSOC);
 			return $unProduit;
 		}
@@ -152,6 +165,31 @@ include_once 'bd.inc.php';
         die();
 		}
 	}
+
+	function getInfoProduit($idProduit)
+	{
+		try 
+		{
+	        $monPdo = connexionPDO();
+			$req = $monPdo->prepare('SELECT p.`id`, p.`libelle`, p.`description`, p.`image`, p.`id_categorie`, cont.`id_contenance` , cont.`prix`, cont.`qte`, cont.`stock`, cont.`isBase`, u.`unit_intitule`, m.`nom_marque`, cat.`libelle` as "libelle_cat"
+			FROM `produit` p
+			JOIN `produitcontenance` cont ON cont.`id`=p.`id`
+			JOIN `unites` u ON u.`id_unit`=cont.`id_unit`
+			JOIN `marque` m ON m.`id_marque`=p.`id_marque`
+			JOIN `categorie` cat ON cat.`id`=p.`id_categorie`
+			WHERE p.`id` =:id ');
+			$res = $req->execute(array('id'=>$idProduit));
+			$unProduit = $req->fetchAll(PDO::FETCH_ASSOC);
+			return $unProduit;
+		}
+		catch (PDOException $e) 
+		{
+        print "Erreur !: " . $e->getMessage();
+        die();
+		}
+	}
+
+	//TODO
 	/**
 	 * Créer un produit avec les informations passée en argument
 	 * retourne true si le produit est créer, sinon false
@@ -193,45 +231,52 @@ include_once 'bd.inc.php';
 	 * @param array $lesIdProduit tableau associatif contenant les id des produits commandés
 	 
 	*/
-	function creerCommande($mail, $lesIdProduits)
+	function creerCommande($mail)
 	{
 		$tmp = false ;
 		try 
 		{
-        $monPdo = connexionPDO();
-		// on récupère le dernier id de commande
-		$req = 'select id as maxi from commande';
-		$res = $monPdo->query($req);
-		$lesLignes = $res->fetchAll();
-		$nbr = count($lesLignes)+1 ;
-		while (testIdCmd($nbr)==false){
-			$nbr++;
-		}
-		$idCommande = $nbr; 
-		$date = date('Y/m/d'); // récupération de la date système
-		$req = "insert into commande values ('$idCommande','$date')";
-		$res = $monPdo->exec($req);
-		// insertion produits commandés
-		foreach($lesIdProduits as $unIdProduit)
-		{
-			$qteProduit=getQteProduit($unIdProduit);
-			$req = "insert into contenir values ('$idCommande','$unIdProduit','$qteProduit')";
-			$res = $monPdo->exec($req);
-		}
+	        $monPdo = connexionPDO();
+			// on récupère le dernier id de commande
+			$req = 'select max(id) as "maxi" from commande';
+			$res = $monPdo->query($req);
+			$res = $res->fetch();
+			if (!is_null($res)){
+				$nbr = $res['maxi']+1;
+			} else {
+				$nbr = 1;
+			}
+						
+			$idCommande = $nbr; 
+			$date = date('Y/m/d'); // récupération de la date système
 
-		$id = getIdClient($mail);
-		$req = "insert into effectuer values ('$id','$idCommande')";
-		$res = $monPdo->exec($req);
+			$req = $monPdo->prepare("INSERT INTO `commande`(`mail`, `id`, `dateCommande`, `etatCde`) VALUES (:mail, :id, :dateC, 'E')");
+			$res = $req->execute(array('mail'=>$mail,'id'=>$idCommande,'dateC'=>$date));
 
-		$tmp = true ;
-		}
-		catch (PDOException $e) 
-		{
-        print "Erreur !: " . $e->getMessage();
-        die();
+			//recherche les élément du panier
+			$lesIdProduits = getLesIdProduitsDuPanier($mail);
+
+			// insertion produits commandés
+			foreach ($lesIdProduits as $unIdProduit) {
+				$qteProduit = getQteProduit($unIdProduit,$mail);
+				$req = $monPdo->prepare("INSERT INTO `contenir`(`id`, `id_contenance`, `mail_commande`, `id_commande`, `qte`) VALUES (:id,:idCont,:mail,:idCmd,:qte)") ;
+				$res = $req->execute(array('id'=>$unIdProduit['id'],
+					'idCont'=>$unIdProduit['id_contenance'],
+					'mail'=>$mail,
+					'idCmd'=>$idCommande,
+					'qte'=>$qteProduit)
+				);
+			}
+
+			$tmp = true ;
+		} catch (PDOException $e) {
+	        print "Erreur !: " . $e->getMessage();
+	        die();
 		}
 		return $tmp;
 	}
+
+	//TODO
 	/**
 	 * Retourne les produits concernés par le tableau des idProduits passée en argument
 	 *
@@ -257,25 +302,6 @@ include_once 'bd.inc.php';
 	}
 
 	/**
-	 * Test l'existence d'un id de commande
-	 * Retourne true si l'id rentrer en paramètre n'existe pas déja sinon false
-	 * 
-	 * @param string $id id d'une commande
-	 * @return boolean $rep true/false
-	 */
-	function testIdCmd($id){
-		$rep=false;
-		$monPdo = connexionPDO();
-		$req = 'select id from commande where id= '.$id;
-		$res = $monPdo->query($req);
-		$laCommande = $res->fetch(PDO::FETCH_ASSOC);
-		if (!$laCommande){
-			$rep=true;
-		}
-		return $rep;
-	}
-
-	/**
 	 * Supprime le produit ayant comme id l'id donnée en paramètre
 	 * Si le produit est effacer alors on retourne true, sinon false
 	 * 
@@ -288,8 +314,15 @@ include_once 'bd.inc.php';
 		try 
 		{
 	        $monPdo = connexionPDO();
-		    $req="delete from produit where id ='$idProduit'";
-			$res = $monPdo->query($req);
+	        $req= $monPdo->prepare("DELETE FROM contenir WHERE `id` = :id");
+			$res = $req->execute(array('id'=>$idProduit));
+	        $req= $monPdo->prepare("DELETE FROM panier WHERE `id` = :id");
+			$res = $req->execute(array('id'=>$idProduit));
+		    $req= $monPdo->prepare("DELETE FROM produitcontenance WHERE `id` = :id");
+			$res = $req->execute(array('id'=>$idProduit));
+			$req= $monPdo->prepare("DELETE FROM produit WHERE `id` = :id");
+			$res = $req->execute(array('id'=>$idProduit));
+
 			$tmp = true;
 		} 
 		catch (PDOException $e) 
@@ -299,6 +332,8 @@ include_once 'bd.inc.php';
 		}
 		return $tmp; 
 	}
+
+	//TODO
 	/**
 	 * Modifie le produit ayant comme id l'id donnée en paramètre avec les élèments donnée en plus en paramètre
 	 * Si le produit est modifier alors on retourne true, sinon false
@@ -351,5 +386,21 @@ include_once 'bd.inc.php';
         die();
 		}
 		return $tmp; 
+	}
+	function getQteMax($idProduit){
+		try 
+		{
+	        $monPdo = connexionPDO();
+		    $req= $monPdo->prepare("SELECT `stock` FROM `produitcontenance` WHERE `id` = :id AND `id_contenance` = :idCont ");
+			$res = $req->execute(array('id'=>$idProduit['id'],'idCont'=>$idProduit['idCont']));
+			$stock= $req->fetch(PDO::FETCH_ASSOC);
+			$qteStock= $stock['stock'];
+			return $qteStock; 
+		} 
+		catch (PDOException $e) 
+		{
+        print "Erreur !: " . $e->getMessage();
+        die();
+		}
 	}
 ?>

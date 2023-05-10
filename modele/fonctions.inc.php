@@ -218,32 +218,9 @@ return  preg_match ('#^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,6}$#', $mail);
  * @param string $mail  chaîne 
  * @return array $lesErreurs un tableau de chaînes d'erreurs
 */
-function getErreursSaisieCommande($nom,$rue,$ville,$cp,$mail)
+function getErreursSaisieCommande($mail)
 {
 	$lesErreurs = array();
-	if($nom=="")
-	{
-		$lesErreurs[]="Il faut saisir le champ nom";
-	}
-	if($rue=="")
-	{
-	$lesErreurs[]="Il faut saisir le champ rue";
-	}
-	if($ville=="")
-	{
-		$lesErreurs[]="Il faut saisir le champ ville";
-	}
-	if($cp=="")
-	{
-		$lesErreurs[]="Il faut saisir le champ Code postal";
-	}
-	else
-	{
-		if(!estUnCp($cp))
-		{
-			$lesErreurs[]= "erreur de code postal";
-		}
-	}
 	if($mail=="")
 	{
 		$lesErreurs[]="Il faut saisir le champ mail";

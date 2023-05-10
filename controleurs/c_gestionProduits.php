@@ -9,7 +9,7 @@ switch($action)
 {
 	case 'seConnecter':
 	{
-		if(!isset($_SESSION['id'])){
+		if(!isset($_SESSION['admin'])){
 			include("vues/v_connexionAdmin.php");
 		} else {
 			header('Location:index.php?uc=administrer&action=voirCategories');
@@ -18,19 +18,26 @@ switch($action)
 	}
 	case 'connection':
 	{
-		if(!isset($_SESSION['id'])){
+		if(!isset($_SESSION['admin'])){
 			if(count($_POST)>0){
-			$nom = $_POST['nom'];$mdp = $_POST['mdp'];
+			$mail = $_POST['mail'];$mdp = $_POST['mdp'];
 			}else{
-				$nom = '';$mdp = '';
+				$mail = '';$mdp = '';
 			}
-			if(verifyExistAdmin($nom,$mdp)){
-				$_SESSION['id'] = getIdAdmin($nom);
-				header('Location:index.php?uc=administrer&action=voirCategories');
-			} else {
-				$msgErreurs[] = "Votre nom ou mot de passe est incorrect";
+			$msgErreurs = getErreursSaisieConnexion($mail,$mdp);
+			if (count($msgErreurs)!=0)
+			{
 				include ("vues/v_erreurs.php");
-				include("vues/v_connexionAdmin.php");
+				include ("vues/v_connexion.php");
+			} else {
+				if(verifyAdmin($mail)){
+					$_SESSION['admin'] = $mail ;
+					header('Location:index.php?uc=administrer&action=voirCategories');
+				} else {
+					$msgErreurs[] = "Votre nom ou mot de passe est incorrect";
+					include ("vues/v_erreurs.php");
+					include("vues/v_connexionAdmin.php");
+				}
 			}
 		} else {
 			header('Location:index.php?uc=administrer&action=voirCategories');
@@ -39,7 +46,7 @@ switch($action)
 	}
 	case 'voirCategories':
 	{
-		if(isset($_SESSION['id'])){
+		if(isset($_SESSION['admin'])){
 			$lesCategories = getLesCategories();
 			include("vues/v_categories.php");
 		} else {
@@ -49,7 +56,7 @@ switch($action)
 	}
 	case 'voirProduits':
 	{
-		if(isset($_SESSION['id'])){
+		if(isset($_SESSION['admin'])){
 			$lesCategories = getLesCategories();
 			include("vues/v_categories.php");
 	  		$categorie = $_REQUEST['categorie'];
@@ -62,7 +69,7 @@ switch($action)
 	}
 	case 'rajouterProduit':
 	{
-		if(isset($_SESSION['id'])){
+		if(isset($_SESSION['admin'])){
 			$id = '';$desc = '';$prix='';$img='';
 			include("vues/v_formulaireProduit.php");
 		} else {
@@ -72,7 +79,7 @@ switch($action)
 	}
 	case 'confirmerProduit':
 	{
-		if(isset($_SESSION['id'])){
+		if(isset($_SESSION['admin'])){
 			$id = $_POST['id'];$desc = $_POST['desc'];$prix=$_POST['prix'];$categ=$_POST['categ'];
 			if ($_FILES['img']['name'] == '')
 				$img=$_POST['img'];
@@ -132,7 +139,7 @@ switch($action)
 	}
 	case 'modifierProduit':
 	{
-		if(isset($_SESSION['id'])){
+		if(isset($_SESSION['admin'])){
 			$leProduit = getProduit($_REQUEST['produit']);
 			// var_dump($leProduit);
 			$id = $leProduit['id'];$desc = $leProduit['description'];$prix = $leProduit['prix'];$img=$leProduit['image'];$categ = $leProduit['id_categorie'];	
@@ -144,7 +151,7 @@ switch($action)
 	}
 	case 'effacerProduit':
 	{
-		if(isset($_SESSION['id'])){
+		if(isset($_SESSION['admin'])){
 			$id=$_REQUEST['produit'];
 			if(supprimerProduit($id)){
 				$_SESSION['msg']="Le produit à bien été effacer";
@@ -163,7 +170,7 @@ switch($action)
 	}
 	case 'seDeconnecter':
 	{
-		unset($_SESSION['id']);
+		unset($_SESSION['admin']);
 		$_SESSION['msg']="Déconnexion réussi";
 		header('Location:index.php?uc=accueil');
 		break;

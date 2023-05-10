@@ -12,3 +12,4 @@ if(isset($_SESSION['id']))
 <ul id="menu">
    <?php echo $element  ?>
 </ul>
+<br>

@@ -1,6 +1,5 @@
 ﻿<?php
 // contrôleur qui gère l'affichage des produits
-initPanier(); // se charge de réserver un emplacement mémoire pour le panier si pas encore fait
 $action = $_REQUEST['action'];
 switch($action)
 {
@@ -12,6 +11,12 @@ switch($action)
 	}
 	case 'voirProduits' :
 	{
+		if(isset($_REQUEST['ajP'])) {
+			if($_REQUEST['ajP']=1){
+				$message = "Produit rajouté à votre panier";
+				include ("vues/v_message.php");
+			}
+		}
 		$lesCategories = getLesCategories();
 		include("vues/v_choixCategorie.php");
   		$categorie = $_REQUEST['categorie'];
@@ -25,27 +30,55 @@ switch($action)
 		include("vues/v_produits.php");
 		break;
 	}
-	case 'ajouterAuPanier' :
+	case 'voirUnProduit' :
 	{
-		$idProduit=$_REQUEST['produit'];
-		
-		$ok = ajouterAuPanier($idProduit);
-		if(!$ok)
-		{
-			$message = "Cet article est déjà dans le panier !!";
-			include("vues/v_message.php");
+		$id= $_REQUEST['produit'];
+		$infoProduit = getInfoProduit($id);
+		//var_dump($infoProduit);
+		$idVariante=0;
+		$maxVariante= count($infoProduit);
+		while ($infoProduit[$idVariante]['isBase']==0 && $idVariante<$maxVariante){
+			$idVariante++;
 		}
-		else{
-		// on recharge la même page ( NosProduits si pas categorie passée dans l'url')
-		if (isset($_REQUEST['categorie'])){
-			$categorie = $_REQUEST['categorie'];
-			header('Location:index.php?uc=voirProduits&action=voirProduits&categorie='.$categorie);
+		$libel=$infoProduit[$idVariante]['libelle'];
+		$image=$infoProduit[$idVariante]['image'];
+		$description=$infoProduit[$idVariante]['description'];
+		$cont=$infoProduit[$idVariante]['id_contenance'];
+		$prix=$infoProduit[$idVariante]['prix'];
+		$max=$infoProduit[$idVariante]['stock'];
+		$unit=$infoProduit[$idVariante]['unit_intitule'];
+		$qte=$infoProduit[$idVariante]['qte'];
+		$marque=$infoProduit[$idVariante]['nom_marque'];
+		$idCateg=$infoProduit[$idVariante]['id_categorie'];
+		$nomCat=$infoProduit[$idVariante]['libelle_cat'];
+		if(getNbrAvisProduit($id)){
+			$avis=getNbrAvisProduit($id);
+			$moy=round(getMoyNoteAvisProduit($id));
+		} else {
+			$avis=0;
+			$moy=0;
 		}
-		else 
-			header('Location:index.php?uc=voirProduits&action=nosProduits');
+		$val=1;
+		$info=array();
+		if ($maxVariante>1){
+			foreach ($infoProduit as $contDif) {
+				$info[$contDif['id_contenance']]=array('stock'=>$contDif['stock'],'qte'=>$contDif['qte'],'stock'=>$contDif['stock'],'prix'=>$contDif['prix'],'unit'=>$contDif['unit_intitule'],'base'=>$contDif['isBase']);
+			}
 		}
+		//var_dump($info);
+		include("vues/v_ficheProduit.php");
 		break;
 	}
+	/*case 'donnerAvis' :
+	{
+		include("vues/v_formulaireAvis.php");
+		break;
+	}
+	case 'ajoutAvis' :
+	{
+		include("vues/v_produits.php");
+		break;
+	}*/
 }
 ?>
 
