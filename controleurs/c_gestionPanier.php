@@ -7,6 +7,8 @@ switch($action)
 		if (isset($_SESSION['mail'])){
 			$mail=$_SESSION['mail'];
 			$n= nbProduitsDuPanier($mail);
+			$st=0.0;
+			$livraison=0
 			if($n >0) {
 				$desIdProduit = getLesIdProduitsDuPanier($mail);
 				//var_dump($desIdProduit);
@@ -63,7 +65,9 @@ switch($action)
 	{
 		if (isset($_SESSION['mail'])){
 			$idProduit=$_REQUEST['produit'];
-			retirerDuPanier($idProduit);
+			$idContenance=$_REQUEST['cont'];
+			$id=array('id'=>$idProduit,'idCont'=>$idContenance);
+			retirerDuPanier($id,$_SESSION['mail']);
 			header('Location: ?uc=gererPanier&action=voirPanier');
 		} else {
 			header('Location: ?uc=gererPanier&action=voirPanier');
@@ -73,10 +77,10 @@ switch($action)
 	case 'viderPanier':
 	{
 		if (isset($_SESSION['mail'])){
-			$n= nbProduitsDuPanier();
+			$n= nbProduitsDuPanier($_SESSION['mail']);
 			if($n >0){
+				supprimerPanier($_SESSION['mail']);
 				$message = "panier vidé";
-				supprimerPanier();
 				include ("vues/v_message.php");
 			} else {
 				$message = "panier vide !!";

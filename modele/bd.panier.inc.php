@@ -59,8 +59,8 @@ function nbProduitsDuPanier($mail)
       $monPdo = connexionPDO();
 		$req = $monPdo->prepare('SELECT SUM(`qte`) as "qteTotal" FROM `panier` WHERE mail=:mail');
 		$res = $req->execute(array('mail'=>$mail));
-		$res = $req->fetch(PDO::FETCH_ASSOC);
-		$nbr = $res['qteTotal'];
+		$req = $req->fetch(PDO::FETCH_ASSOC);
+		$nbr = $req['qteTotal'];
 		return $nbr;
 	} 
 	catch (PDOException $e) {

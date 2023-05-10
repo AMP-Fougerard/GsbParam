@@ -40,7 +40,7 @@
 							<a href="index.php?uc=voirProduits&action=voirUnProduit&produit=<?php echo $id; ?>" class="btn btn-success">
 								Voir
 							</a>
-							<a href="index.php?uc=gererPanier&produit=<?php echo $id; ?>&action=supprimerUnProduit" class="btn border-success text-success" onclick="return confirm('Voulez-vous vraiment retirer cet article ?');">
+							<a href="index.php?uc=gererPanier&produit=<?php echo $id; ?>&cont=<?php echo $idCont; ?>&action=supprimerUnProduit" class="btn border-success text-success" onclick="return confirm('Voulez-vous vraiment retirer cet article ?');">
 								Retirer 
 								<img src="assets/images/retirerpanier.png" title="Retirer du panier" alt="retirer du panier" />
 							</a>
@@ -50,6 +50,19 @@
 				<?php } ?>
 			</div>
 			<div class="border col-4">
+				<div class="d-flex flex-row justify-content-between">
+					<p class="p-2">Sous-total</p>
+					<p class="p-2"><?php echo $st; ?> €</p>
+				</div>
+				<div class="d-flex flex-row justify-content-between">
+					<p class="p-2">Livraison</p>
+					<p class="p-2"><?php if($livraison==0)echo "(Gratuit) "; echo $livraison; ?> €</p>
+				</div>
+				<hr>
+				<div class="d-flex flex-row justify-content-between">
+					<p class="p-2">Total TTC</p>
+					<p class="p-2"><?php echo $st+$livraison; ?> €</p>
+				</div>
 				<div id="boutons">
 					<div class="commande">
 						<button type="submit" class="btn btn-success">

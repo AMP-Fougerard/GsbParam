@@ -143,17 +143,13 @@ include_once 'bd.inc.php';
 				} 
 				else 
 				{
-					if ($mail!=$result['mail'])
-					{
-						$lesErreurs[]= "Ce mail n'existe pas";
-					} 
-					else 
-					{
+					if($result){
 						if(!password_verify($mdp, $result['pass']))
 						{
 							$lesErreurs[]= "Le mot de passe est incorrect";
 						}
-						
+					} else {
+						$lesErreurs[]= "Ce mail n'existe pas";
 					}
 				}
 			}
