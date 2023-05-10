@@ -24,7 +24,7 @@
 	<form method="POST" action="index.php?uc=gererPanier&action=ajouterAuPanier&categorie=<?php echo $idCateg ;?>&produit=<?php echo $id ;?>&cont=<?php echo $cont ;?>">
 		<div class="row pt-1 justify-content-center align-items-center">
 			<div class="col mx-auto">
-				<img src="<?php echo $image; ?>" alt="image descriptive" />
+				<img src="assets/<?php echo $image; ?>" alt="image descriptive" />
 			</div>
 			<div class="col">
 				<h3 class="text-center text-success"><?php echo $libel; ?></h3>
@@ -80,14 +80,14 @@
 				<?php if ($max<1) { ?>	
 					<div class="input-group-append">
 						<button disabled type="submit" class="btn btn-success" onclick="return false"> 
-							Rajouter au panier <img src="images/mettrepanier.png" TITLE="Ajouter au panier" alt="Mettre au panier"> 
+							Rajouter au panier <img src="assets/images/mettrepanier.png" TITLE="Ajouter au panier" alt="Mettre au panier"> 
 						</button>
 					</div>
 				<?php } else { ?>
 					<input id="qte" name="qte" type="number" class="form-control"  min="1" max="<?php echo $max; ?>" value="<?php echo $val; ?>" />
 					<div class="input-group-append">
 						<button type="submit" class="btn btn-success"> 
-							Rajouter au panier <img src="images/mettrepanier.png" TITLE="Ajouter au panier" alt="Mettre au panier" /> 
+							Rajouter au panier <img src="assets/images/mettrepanier.png" TITLE="Ajouter au panier" alt="Mettre au panier" /> 
 						</button>
 					</div>
 				<?php } ?>	

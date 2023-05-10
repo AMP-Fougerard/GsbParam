@@ -1,6 +1,6 @@
 ﻿<div id="bandeau">
 <!-- Images En-tête -->
-<img src="images/logo.jpg"	alt="GsbLogo" title="GsbLogo"/>
+<img src="assets/images/logo.jpg"	alt="GsbLogo" title="GsbLogo"/>
 </div>
 <!-- Phrase de connection -->
 <h3> Bonjour, <?php echo strstr($_SESSION['mail'],'@',true); ?></h3>

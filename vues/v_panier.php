@@ -24,7 +24,7 @@
 				// affichage
 			?>
 				<div class="container card card-body row mb-3" style="width:100%;height:300px;min-width:500px;">
-					<img src="<?php echo $image; ?>" alt="image descriptive" class="m-auto" style="width:200px;height:200px;" />
+					<img src="assets/<?php echo $image; ?>" alt="image descriptive" class="m-auto" style="width:200px;height:200px;" />
 					<div class="" style="width:60%;">
 						<h3 class="card-title text-center text-success"><?php echo $marque; ?></h3>
 						<p class="text-center">
@@ -42,7 +42,7 @@
 							</a>
 							<a href="index.php?uc=gererPanier&produit=<?php echo $id; ?>&action=supprimerUnProduit" class="btn border-success text-success" onclick="return confirm('Voulez-vous vraiment retirer cet article ?');">
 								Retirer 
-								<img src="images/retirerpanier.png" title="Retirer du panier" alt="retirer du panier" />
+								<img src="assets/images/retirerpanier.png" title="Retirer du panier" alt="retirer du panier" />
 							</a>
 						</div>
 					</div>

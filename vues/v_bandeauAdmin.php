@@ -1,6 +1,6 @@
 <div id="bandeau">
 <!-- Images En-tête -->
-<img src="images/logo_admin.jpg" alt="GsbLogo" title="GsbLogo"/>
+<img src="assets/images/logo_admin.jpg" alt="GsbLogo" title="GsbLogo"/>
 </div>
 <!-- Phrase de connection -->
 <?php $element = '<li><a href="index.php?uc=accueil"> Accueil </a></li>';

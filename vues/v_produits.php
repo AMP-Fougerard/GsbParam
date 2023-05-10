@@ -25,7 +25,7 @@ foreach( $lesProduits as $unProduit)
 		    <h4 class="card-title text-success"><?php echo $marque ?></h4>
 		    <p class="card-text"><?php echo $libel ?></p>
 		    <div class="container">
-		    	<img src="<?php echo $image ?>" class="mx-auto d-block" alt=image style="width:50%;height:50%" />
+		    	<img src="assets/<?php echo $image ?>" class="mx-auto d-block" alt=image style="width:50%;height:50%" />
 		    </div>
 		    <p class="card-text py-auto" style="height:50px;"><?php echo $description ?></p>
 		    <div class="container">

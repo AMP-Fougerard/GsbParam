@@ -24,7 +24,7 @@ foreach( $lesProduits as $unProduit)
 		<div class="card-body">
 		    <h4 class="card-title text-success"><?php echo $marque ?></h4>
 		    <p class="card-text"><?php echo $libel ?></p>
-		    <div class="container"><img src="<?php echo $image ?>" class="mx-auto d-block" alt=image style="width:50%;height:50%" /></div>
+		    <div class="container"><img src="assets/<?php echo $image ?>" class="mx-auto d-block" alt=image style="width:50%;height:50%" /></div>
 		    <p class="card-text py-auto" style="height:50px;"><?php echo $description ?></p>
 		    <div class="container">
 		    	<?php for ($i=0; $i < 5 ; $i++) { 
@@ -51,7 +51,7 @@ foreach( $lesProduits as $unProduit)
 	</div>
 
 	<!--<div class="card">
-			<div class="photoCard"><img src="<?php echo $image ?>" alt=image /></div>
+			<div class="photoCard"><img src="assets/<?php echo $image ?>" alt=image /></div>
 			<div class="descrCard"><?php echo $description ?></div>
 			<div class="prixCard"><?php echo $prix."€" ?></div>
 			<?php if ($_REQUEST['uc'] == 'administrer') {?>
