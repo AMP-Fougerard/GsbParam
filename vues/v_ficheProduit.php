@@ -31,7 +31,7 @@
 				<p class="text-center"><b>Produit de la marque <?php echo $marque; ?> de la catégorie <?php echo $nomCat; ?></b></p>
 				<p><u>Description :</u></p>
 				<p class="small"><?php echo $description; ?></p>
-				<div class="container">
+				<!--<div class="container">
 			    	<?php for ($i=0; $i < 5 ; $i++) { 
 			    		if($moy>$i){
 				    		echo '<span class="fa fa-star checked"></span>';
@@ -41,7 +41,7 @@
 			    	}	
 					echo " ".$avis; ?> avis
 			    </div>
-			    <!--<a href="index.php?uc=voirProduits&action=donnerAvis"></a>-->
+			    <a href="index.php?uc=voirProduits&action=donnerAvis"></a>-->
 				<hr>
 				<div class="form-group row">	
 					<label for="contenance" class="my-auto" style="width:120px">Contenance :</label>

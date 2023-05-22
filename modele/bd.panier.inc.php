@@ -42,7 +42,7 @@ function getLesIdProduitsDuPanier($mail)
 {
 	try {
       $monPdo = connexionPDO();
-		$req = $monPdo->prepare('SELECT `id`,`id_contenance` FROM `panier` WHERE mail=:mail');
+		$req = $monPdo->prepare('SELECT `id`, `id_contenance` FROM `panier` WHERE mail=:mail');
 		$res = $req->execute(array('mail'=>$mail));
 		$lesLignes = $req->fetchAll(PDO::FETCH_ASSOC);
 		return $lesLignes;
@@ -92,7 +92,7 @@ function getQteProduit($idProduit,$mail)
 	try {
       $monPdo = connexionPDO();
 		$req = $monPdo->prepare('SELECT `qte` FROM `panier` WHERE id=:id AND id_contenance=:idCont AND mail=:mail');
-		$res = $req->execute(array('id'=>$idProduit['id'],'idCont'=>$idProduit['idCont'],'mail'=>$mail));
+		$res = $req->execute(array('id'=>$idProduit['id'],'idCont'=>$idProduit['id_contenance'],'mail'=>$mail));
 		$res = $req->fetch(PDO::FETCH_ASSOC);
 		$nbr = $res['qte'];
 		return $nbr;
@@ -107,8 +107,8 @@ function modifierQteProduit($idProduit,$mail,$qte)
 {
 	$tmp = false;
 	try {
-      $monPdo = connexionPDO();
-		$req = $monPdo->prepare('UPDATE `panier` SET `qte`=:qte WHERE id=:id AND id_contenance=:idCont AND mail=:mail');
+    	$monPdo = connexionPDO();
+		$req = $monPdo->prepare('UPDATE `panier` SET `qte`=:qte WHERE `id`=:id AND `id_contenance`=:idCont AND `mail`=:mail');
 		$res = $req->execute(array('qte'=>$qte,'id'=>$idProduit['id'],'idCont'=>$idProduit['idCont'],'mail'=>$mail));
 		if (!is_null($res)){
 			$tmp = true ;
@@ -117,24 +117,8 @@ function modifierQteProduit($idProduit,$mail,$qte)
 	catch (PDOException $e) {
       print "Erreur !: " . $e->getMessage();
       die();
-	}	
+	}
 	return $tmp ;
-}
-
-
-function estUnCp($codePostal)
-{
-   return strlen($codePostal)== 5 && estEntier($codePostal);
-}
-
-function estEntier($valeur) 
-{
-	return preg_match("/[^0-9]/", $valeur) == 0;
-}
-
-function estUnMail($mail)
-{
-return  preg_match ('#^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,6}$#', $mail);
 }
 
 /**

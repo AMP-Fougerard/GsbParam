@@ -11,6 +11,20 @@
  */
 include_once 'bd.inc.php';
 
+	function estUnCp($codePostal)
+	{
+	   return strlen($codePostal)== 5 && estEntier($codePostal);
+	}
+
+	function estEntier($valeur) 
+	{
+		return preg_match("/[^0-9]/", $valeur) == 0;
+	}
+
+	function estUnMail($mail)
+	{
+	return  preg_match ('#^[\w.-]+@[\w.-]+\.[a-zA-Z]{2,6}$#', $mail);
+	}
 
 	/**
 	 * Crée un compte client 
@@ -70,6 +84,50 @@ include_once 'bd.inc.php';
 		return $tmp;
 	}
 	
+	function commandeClient($mail)
+	{
+		$tmp = false ;
+		try 
+		{
+	        $monPdo = connexionPDO();
+			$req = $monPdo->prepare("SELECT `id`,`dateCommande`,`etatCde` FROM commande WHERE `mail`=:mail ORDER BY `dateCommande` DESC,`id` DESC ;");
+			$res = $req->execute(array('mail'=>$mail));
+			if (!is_null($res)){
+				$tmp = true ;
+			}
+		}
+		catch (PDOException $e) 
+		{
+	        print "Erreur !: " . $e->getMessage();
+	        die();
+		}
+		return $tmp;
+	}
+
+	function produitCommande($mail,$id)
+	{
+		$tmp = false ;
+		try 
+		{
+	        $monPdo = connexionPDO();
+			$req = $monPdo->prepare("SELECT c.`id`,c.`id_contenance`
+				FROM contenir c 
+				JOIN produit p ON P.`id`=c.`id`
+				JOIN produitcontenance pc ON pc.`id_contenance`=c.`id_contenance`
+				WHERE `mail`=:mail AND ;");
+			$res = $req->execute(array('mail'=>$mail));
+			if (!is_null($res)){
+				$tmp = true ;
+			}
+		}
+		catch (PDOException $e) 
+		{
+	        print "Erreur !: " . $e->getMessage();
+	        die();
+		}
+		return $tmp;
+	}
+
 	/**
 	 * Retourne un tableau d'erreurs de saisie pour un client
 	 * @param string $mail  chaîne 

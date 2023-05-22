@@ -392,7 +392,7 @@ include_once 'bd.inc.php';
 		{
 	        $monPdo = connexionPDO();
 		    $req= $monPdo->prepare("SELECT `stock` FROM `produitcontenance` WHERE `id` = :id AND `id_contenance` = :idCont ");
-			$res = $req->execute(array('id'=>$idProduit['id'],'idCont'=>$idProduit['idCont']));
+			$res = $req->execute(array('id'=>$idProduit['id'],'idCont'=>$idProduit['id_contenance']));
 			$stock= $req->fetch(PDO::FETCH_ASSOC);
 			$qteStock= $stock['stock'];
 			return $qteStock; 

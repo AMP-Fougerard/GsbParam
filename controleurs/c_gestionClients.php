@@ -78,6 +78,54 @@ switch($action)
 		header('Location: ?uc=accueil');
 		break;
 	}
+	case 'voirProfil' :
+	{
+		if (isset($_SESSION['mail'])) {
+			$mail=$_SESSION['mail'];
+			$list='<li class="col-3 border text-center"><a href="index.php?uc=gererClient&action=voirProfil"> Mes informations </a></li>
+		<li class="col-3 border bg-light text-center"><a href="index.php?uc=gererClient&action=voirCommande"> Mes commandes </a></li>
+		<!--<li class="col-3 border bg-light text-center"><a href="index.php?uc=gererClient&action=voirAvis"> Mes avis </a></li>-->';
+			$contenu='<div>
+			<p>mail : '.$mail.'</p>
+			<p>mot de passe : *******</p>
+			</div>';
+			include ("vues/v_profil.php");
+		} else {
+			$msgErreurs[] = "Un compte est nécessaire pour voir son profil";
+			include ("vues/v_erreurs.php");
+		}
+		break;
+	}
+	case 'voirCommande' :
+	{
+		if (isset($_SESSION['mail'])) {
+			$mail=$_SESSION['mail'];
+			$list='<li class="col-3 border bg-light text-center"><a href="index.php?uc=gererClient&action=voirProfil"> Mes informations </a></li>
+		<li class="col-3 border text-center"><a href="index.php?uc=gererClient&action=voirCommande"> Mes commandes </a></li>
+		<!--<li class="col-3 border bg-light text-center"><a href="index.php?uc=gererClient&action=voirAvis"> Mes avis </a></li>-->';
+			$lesCommandes=commandeClient($mail);
+			include ("vues/v_profil.php");
+		} else {
+			$msgErreurs[] = "Un compte est nécessaire pour voir son profil";
+			include ("vues/v_erreurs.php");
+		}
+		break;
+	}
+	case 'voirAvis' :
+	{
+		header('Location: ?uc=gererClient&action=voirProfil');
+		if (isset($_SESSION['mail'])) {
+			$mail=$_SESSION['mail'];
+			$list='<li class="col-3 border bg-light text-center"><a href="index.php?uc=gererClient&action=voirProfil"> Mes informations </a></li>
+		<li class="col-3 border bg-light text-center"><a href="index.php?uc=gererClient&action=voirCommande"> Mes commandes </a></li>
+		<li class="col-3 border text-center"><a href="index.php?uc=gererClient&action=voirAvis"> Mes avis </a></li>';
+			include ("vues/v_profil.php");
+		} else {
+			$msgErreurs[] = "Un compte est nécessaire pour voir son profil";
+			include ("vues/v_erreurs.php");
+		}
+		break;
+	}
 }
 ?>
 

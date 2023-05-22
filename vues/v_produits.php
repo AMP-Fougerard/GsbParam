@@ -28,7 +28,7 @@ foreach( $lesProduits as $unProduit)
 		    	<img src="assets/<?php echo $image ?>" class="mx-auto d-block" alt=image style="width:50%;height:50%" />
 		    </div>
 		    <p class="card-text py-auto" style="height:50px;"><?php echo $description ?></p>
-		    <div class="container">
+		    <!--<div class="container">
 		    	<?php for ($i=0; $i < 5 ; $i++) { 
 		    		if($moy>$i){
 			    		echo '<span class="fa fa-star checked"></span>';
@@ -37,7 +37,7 @@ foreach( $lesProduits as $unProduit)
 			    	}
 		    	}	
 				echo " ".$avis; ?> avis
-		    </div>
+		    </div>-->
 		</div>
 		<div class="row py-2 border-dark text-center" style="background-color:#EEEEEE;">
 			<div class="col">A partir de<br/><?php echo $prix."€" ?></div>
