@@ -4,6 +4,10 @@
 	function modifPanier(idProduit,idContenance){
 		qteActuel= document.getElementById("qte"+idProduit+""+idContenance).value;
 		//console.log(qteActuel);
+		stock=document.getElementById("qte"+idProduit+""+idContenance).getAttribute('max');
+		if (qteActuel<=stock){
+			document.getElementById('commander').removeAttribute("disabled");
+		}
 
 		total=0.0;
 		for (var id in lesProduits){
@@ -13,8 +17,8 @@
 			total = total + lesProduits[id][1] * lesProduits[id][2]
 		}
 
-		document.getElementById("sousTotal").innerHTML = total +" €";
-		document.getElementById("total").innerHTML = total +" €";
+		document.getElementById("sousTotal").innerHTML = total.toFixed(2) +" €";
+		document.getElementById("total").innerHTML = total.toFixed(2) +" €";
 	}
 </script>
 
@@ -38,17 +42,28 @@
 				$prix = $unProduit['prix'];
 				$marque= $unProduit['nom_marque'];
 				$qte=$unProduit['qte'];
-				$qtePanier = getQteProduit($idProduit,$mail);
+				$qtePanier = getQteProduitPanier($idProduit,$mail);
 				$unit = $unProduit['unit_intitule'];
-				$max = getQteMax($idProduit);
+				$max = getQteMaxStock($idProduit);
+				if($erreurStock == false){
+					if ($qtePanier>$max){
+						$erreurStock=true;
+						$produitError=true;
+					}
+				}
 
 				$st+=$prix*$qtePanier;
 				// affichage
 			?>
 			<script>
-				lesProduits["<?php echo $id ; ?>"]=[<?php echo $idCont ; ?>,<?php echo $prix ; ?>,<?php echo $qtePanier ; ?>]
+				lesProduits["<?php echo $id ; ?>"]=[<?php echo $idCont ; ?>,<?php echo $prix ; ?>,<?php echo $qtePanier ; ?>,<?php echo $max ; ?>]
 			</script>
-				<div id="<?php echo $id.''.$idCont; ?>" class="container card card-body row mb-3" style="width:100%;height:300px;min-width:500px;">
+			<?php if($produitError == true){
+				echo '<div id="'.$id.''.$idCont.'" class="container card card-body row mb-3 border-danger" style="width:100%;height:325px;min-width:500px;">';		
+			} else {
+				echo '<div id="'.$id.''.$idCont.'" class="container card card-body row mb-3" style="width:100%;height:300px;min-width:500px;">';	
+			}
+			?>
 					<img src="assets/<?php echo $image; ?>" alt="image descriptive" class="m-auto" style="width:200px;height:200px;" />
 					<div class="" style="width:60%;">
 						<h3 class="card-title text-center text-success"><?php echo $marque; ?></h3>
@@ -57,6 +72,7 @@
 						</p>
 						<p class="card-text small"><?php echo $description; ?></p>
 						<p class="card-text my-auto mb-3"><?php echo '<b class="text-success" id="prix'.$id."".$idCont.'" name="'.$prix.'">'.$prix.' €</b> - '.$qte.' '.$unit; ?></p>
+						<?php if($produitError == true){echo '<p><b class="text-danger">(En stock : '.$max.')</b></p>';}?>
 						<div class="form-group py-auto mb-3">
 							<label for="qte<?php echo $id."".$idCont; ?>" class="card-text my-auto" style="width: 30%;">Quantite :</label>
 							<input id="qte<?php echo $id."".$idCont; ?>" name="qte<?php echo $id."Z".$idCont; ?>" type="number" class="form-control my-auto" min="1" max="<?php echo $max; ?>" value="<?php echo $qtePanier; ?>" style="width:60px;" onchange="modifPanier(<?php echo '\''.$id.'\','.$idCont; ?>)"/>
@@ -72,25 +88,26 @@
 						</div>
 					</div>
 				</div>
-				<?php } ?>
+				<?php if($produitError == true){$produitError=false;}
+			} ?>
 			</div>
 			<div class="border col-4">
 				<div class="d-flex flex-row justify-content-between">
 					<p class="p-2">Sous-total</p>
-					<p id="sousTotal" name="<?php echo $st; ?>" class="p-2"><?php echo $st; ?> €</p>
+					<p id="sousTotal" name="<?php echo $st; ?>" class="p-2"><?php echo number_format($st,2); ?> €</p>
 				</div>
 				<div class="d-flex flex-row justify-content-between">
 					<p class="p-2">Livraison</p>
-					<p class="p-2"><?php if($livraison==0)echo "(Gratuit) "; echo $livraison; ?> €</p>
+					<p class="p-2"><?php if($livraison==0)echo "(Gratuit) "; echo number_format($livraison,2); ?> €</p>
 				</div>
 				<hr>
 				<div class="d-flex flex-row justify-content-between">
 					<p class="p-2">Total TTC</p>
-					<p id="total" nama="<?php echo $st+$livraison; ?>" class="p-2"><?php echo $st+$livraison; ?> €</p>
+					<p id="total" nama="<?php echo $st+$livraison; ?>" class="p-2"><?php echo number_format($st+$livraison,2); ?> €</p>
 				</div>
 				<div id="boutons">
 					<div class="commande">
-						<button type="submit" class="btn btn-success">
+						<button <?php if($erreurStock == true){echo 'disabled';} ?> id="commander" type="submit" class="btn btn-success">
 							Commander
 						</button>
 					</div>

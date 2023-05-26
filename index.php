@@ -1,4 +1,4 @@
-<?php
+<?php ob_start();
 session_start();
 include("vues/v_entete.html") ;
 //require_once("modele/fonctions.inc.php");
@@ -13,10 +13,10 @@ else
 	$uc = $_REQUEST['uc'];
 
 
-if (isset($_SESSION['mail'])){
-	include("vues/v_bandeauConnection.php") ;
-} elseif($uc=='administrer') {
+if ($uc=='administrer'){
 	include("vues/v_bandeauAdmin.php") ;
+} elseif(isset($_SESSION['mail'])) {
+	include("vues/v_bandeauConnection.php") ;
 } else {
 	include("vues/v_bandeau.html") ;
 }

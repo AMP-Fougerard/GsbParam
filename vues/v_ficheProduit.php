@@ -24,7 +24,7 @@
 	<form method="POST" action="index.php?uc=gererPanier&action=ajouterAuPanier&categorie=<?php echo $idCateg ;?>&produit=<?php echo $id ;?>&cont=<?php echo $cont ;?>">
 		<div class="row pt-1 justify-content-center align-items-center">
 			<div class="col mx-auto">
-				<img src="assets/<?php echo $image; ?>" alt="image descriptive" />
+				<img src="assets/<?php echo $image; ?>" alt="image descriptive" style="height: 200px;" />
 			</div>
 			<div class="col">
 				<h3 class="text-center text-success"><?php echo $libel; ?></h3>
@@ -56,7 +56,7 @@
 							} ?>
 						</select>
 						<br><br>
-						<?php echo "<p id=\"prixProduitContenance\"><b class=\"text-success\">".$prix."€</b> - ";
+						<?php echo "<p id=\"prixProduitContenance\"><b class=\"text-success\">".number_format($prix,2)."€</b> - ";
 						if ($max<1)
 							echo "Rupture de Stock</p>";
 						else
@@ -66,7 +66,7 @@
 								echo "En Stock</p>"; ?>
 					<?php } else { 
 						echo '<p class="col my-auto">'.$qte.' '.$unit.'</p>';
-						echo "<p><b class=\"text-success\">".$prix."€</b> - "; 
+						echo "<p><b class=\"text-success\">".number_format($prix,2)."€</b> - "; 
 						if ($max<1)
 							echo "Rupture de Stock</p>";
 						else
@@ -99,3 +99,7 @@
 		</div>
 	</form>
 </article>
+<!--<article class="container mb-5" style="border: #CCC 1px solid; width: 50%;">
+	<h3 class="mt-3">Produits associés</h3>
+
+</article>-->

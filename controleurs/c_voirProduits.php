@@ -20,14 +20,56 @@ switch($action)
 		$lesCategories = getLesCategories();
 		include("vues/v_choixCategorie.php");
   		$categorie = $_REQUEST['categorie'];
+  		$nomCateg = getNomCateg($categorie);
 		$lesProduits = getLesProduitsDeCategorie($categorie);
 		include("vues/v_produitsDeCategorie.php");
 		break;
 	}
 	case 'nosProduits' :
 	{
+		$prixMax=round(getPrixArticlePlusChere());
+		$valueMin='';$valueMax='';
+		include("vues/v_choixPrix.php");
 		$lesProduits = getLesProduits();
 		include("vues/v_produits.php");
+		break;
+	}
+	case 'nosProduitsParPrix' :
+	{
+		if(isset($_POST)){
+			$prixMax=round(getPrixArticlePlusChere());
+			if(isset($_POST['min'])){
+				$min=$_POST['min'];
+				if(is_numeric($min)){
+					$valueMin=$min;
+				}else{
+					$min=0;
+					$valueMin='';
+				}
+			}else{
+				$min=0;
+				$valueMin='';
+			}
+			if(isset($_POST['max'])){
+				$max=$_POST['max'];
+				if(is_numeric($max)){
+					$valueMax=$max;
+				}else{
+					$max=$prixMax+1;
+					$valueMax='';
+				}
+			}else{
+				$max=$prixMax+1;
+				$valueMax='';
+			}
+			// var_dump($min);var_dump($max);
+			include("vues/v_choixPrix.php");
+			$lesProduits = getLesProduitsDuTableau(getArticleByPrix($min,$max));
+			include("vues/v_produits.php");
+		}else{
+			ob_clean();
+			header("Location:index.php?uc=voirProduits&action=nosProduits");
+		}
 		break;
 	}
 	case 'voirUnProduit' :

@@ -14,6 +14,8 @@ switch($action)
 				include ("vues/v_erreurs.php");
 			}
 			if ($n > 0) {
+				$erreurStock=false;
+				$produitError=false;
 				$desIdProduit = getLesIdProduitsDuPanier($mail);
 				//var_dump($desIdProduit);
 				$lesProduitsDuPanier = getLesProduitsDuTableau($desIdProduit);
@@ -48,14 +50,15 @@ switch($action)
 				$message = "Cet article est déjà dans le panier !! <br>
 				<a class=\"btn btn-primary\" href=\"index.php?uc=gererPanier&action=voirPanier\">Voir son panier</a><br>";
 				include("vues/v_message.php");
-			}
-			else{
+			}else{
 			// on recharge la même page ( NosProduits si pas categorie passée dans l'url')
 				if (isset($_REQUEST['categorie'])) {
 					$categorie = $_REQUEST['categorie'];
+					ob_clean();
 					header('Location:index.php?uc=voirProduits&action=voirProduits&ajP=1&categorie='.$categorie);
 				}
 				else {
+					ob_clean();
 					header('Location:index.php?uc=voirProduits&action=nosProduits&ajP=1');
 				}
 			}
@@ -72,8 +75,10 @@ switch($action)
 			$idContenance=$_REQUEST['cont'];
 			$id=array('id'=>$idProduit,'idCont'=>$idContenance);
 			retirerDuPanier($id,$_SESSION['mail']);
+			ob_clean();
 			header('Location: ?uc=gererPanier&action=voirPanier');
 		} else {
+			ob_clean();
 			header('Location: ?uc=gererPanier&action=voirPanier');
 		}
 		break;
@@ -91,6 +96,7 @@ switch($action)
 				include ("vues/v_message.php");
 			}
 		} else {
+			ob_clean();
 			header('Location: ?uc=gererPanier&action=voirPanier');
 		}	
 		break;
@@ -116,6 +122,7 @@ switch($action)
 						$ok=false;
 					}
 				}
+				ob_clean();
 				if ($ok){
 					header('Location: ?uc=gererPanier&action=confirmerCommande');
 				}else{
@@ -140,26 +147,30 @@ switch($action)
 	{
 		if (isset($_SESSION['mail'])){
 			$mail=$_SESSION['mail'];
-			$lesIdProduit = getLesIdProduitsDuPanier($mail);
-			//var_dump($lesIdProduit);
-			if ( creerCommande($mail, $lesIdProduit ) ){
-				$message = "Commande enregistrée";
+			//$desIdProduit = getLesIdProduitsDuPanier($mail);
+			//var_dump($desIdProduit == true);
+			if ( creerCommande($mail) ) {
 				supprimerPanier($mail);
+				$message = "Commande enregistrée";
+				include ("vues/v_message.php");
 			} else {
-				$msgErreurs[] = "Une erreur est survenue lors de l'enregistrement de la commande";
-				include ("vues/v_erreurs.php");
 				$desIdProduit = getLesIdProduitsDuPanier($mail);
-				$lesProduitsDuPanier = getLesProduitsDuTableau($desIdProduit);
-				include ("vues/v_panier.php");
+				ob_clean();
+				if ($desIdProduit){
+					header('Location: ?uc=gererPanier&action=voirPanier&erreur=1');
+				} else {
+					header('Location: ?uc=voirProduits&action=nosProduits');
+				}
 			}
-			include ("vues/v_message.php");
 		} else {
+			ob_clean();
 			header('Location: ?uc=gererPanier&action=voirPanier');
 		}
 		break;
 	}
 	default:
 	{
+		ob_clean();
 		header('Location: ?uc=gererPanier&action=voirPanier');
 	}
 }

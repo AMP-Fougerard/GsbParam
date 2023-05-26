@@ -1,3 +1,4 @@
+<h3 class="container text-center">Produits de la catégorie : <b><?php echo $nomCateg; ?></b></h3>
 <div id="produits" class="container">
 <?php
 // parcours du tableau contenant les produits à afficher
@@ -24,7 +25,7 @@ foreach( $lesProduits as $unProduit)
 		<div class="card-body">
 		    <h4 class="card-title text-success"><?php echo $marque ?></h4>
 		    <p class="card-text"><?php echo $libel ?></p>
-		    <div class="container"><img src="assets/<?php echo $image ?>" class="mx-auto d-block" alt=image style="width:50%;height:50%" /></div>
+		    <div class="container"><img src="assets/<?php echo $image ?>" class="mx-auto d-block" alt=image style="height: 150px;" /></div>
 		    <p class="card-text py-auto" style="height:50px;"><?php echo $description ?></p>
 		    <!--<div class="container">
 		    	<?php for ($i=0; $i < 5 ; $i++) { 
@@ -38,15 +39,29 @@ foreach( $lesProduits as $unProduit)
 		    </div>-->
 		</div>
 		<div class="row py-2 border-dark text-center" style="background-color:#EEEEEE;">
-			<div class="col">A partir de<br/><?php echo $prix."€" ?></div>
+			<div class="col">A partir de<br/><?php echo number_format($prix,2)."€" ?></div>
 			<?php if($stock>1) {
 				echo "<div class=\"col text-success my-auto\">En Stock</div>";
 			} else {
 				echo "<div class=\"col text-danger my-auto\">En Rupture</div>";
 			} ?>
-			<div class="col my-auto" >
-				<a href="index.php?uc=voirProduits&action=voirUnProduit&produit=<?php echo $id ?>" class="btn border-success text-success">voir</a>
-			</div>
+			<?php if ($_REQUEST['uc'] == 'administrer') {?>
+				<div class="imgCard">
+					<a href="index.php?uc=administrer&categorie=<?php echo $categorie ?>&produit=<?php echo $id ?>&action=modifierProduit">
+						<img src="assets/images/edit.png" TITLE="Modifier le produit" alt="Modifier"> 
+					</a>
+					<a href="index.php?uc=administrer&categorie=<?php echo $categorie ?>&produit=<?php echo $id ?>&action=effacerProduit">
+						<img src="assets/images/bin.png" TITLE="Effacer le produit" alt="Effacer" onclick="return confirm('Voulez-vous vraiment supprimer ce produit ?');"> 
+					</a>
+				</div>
+			<?php } else { ?>
+				<div class="col my-auto" >
+					<a href="index.php?uc=voirProduits&action=voirUnProduit&produit=<?php echo $id ?>" class="btn border-success text-success">
+						voir
+					</a>
+				</div>
+			<?php } ?>
+			
 		</div>
 	</div>
 
